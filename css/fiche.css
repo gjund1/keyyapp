@@ -1,0 +1,48 @@
+/* Google fonts */
+.font-back {
+  font-size: 1.2em;
+}
+
+/* top */
+.Main-fiche-top {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.Main-fiche-top-back:hover {
+    color: #007bff;
+}
+
+.Main-fiche-top-ville {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* ===== Fiche ===== */
+
+/* .Main-fiche-article-item {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    border-left: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+} */
+
+.Main-map {
+    height: 300px;
+}
+
+/* ===== Article ===== */
+.Main-fiche-article {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Main-fiche-article-img {
+    width: 20px;
+    height: 20px;
+    margin: 15px;
+    object-fit: cover;
+}

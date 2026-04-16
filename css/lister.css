@@ -1,0 +1,143 @@
+/* ======================== */
+/*          LIST            */
+/* ======================== */
+
+/* Google fonts */
+.font-back {
+  font-size: 1.2em;
+}
+
+.font-map {
+  font-size: 1.4em;
+  color: #007bff;
+  /* cursor: pointer; */
+}
+
+/* top */
+.Main-list-top {
+    display: flex;
+    justify-content: center;
+    padding: 12px 30px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.Main-list-top-back {
+    position: absolute;
+    left: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.Main-list-top-back:hover {
+    color: #007bff;
+}
+
+.Main-list-top-title {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* ===== Article ===== */
+.Main-list-article {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Item {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    border-left: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+}
+
+.Item:hover {
+    border: 2px solid  #007bff;
+    border-radius: 10px;
+}
+
+.Item-photo {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin: 15px;
+}
+
+.Item-content {
+    flex: 1;
+    margin: 15px 15px 15px 0px;
+    font-size: .85em;
+}
+
+.Item-content-box {
+    display: flex;
+    justify-content: space-between;
+    /* flex: 1; */
+}
+
+.Item-content-box-ville-span {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.Item-content-date {
+    font-style: italic;
+}
+
+.Item-content-statut {
+    font-style: italic;
+}
+
+.Item-content-statut-span {
+    font-weight: bold;
+    color: orangered;
+    /* color: green; */
+    /* color: red; */
+}
+
+@media (min-width: 968px) {
+    .Main-list {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 10px;
+    }
+
+    .Main-list-top {
+        grid-column: 1 / 3;
+    }
+
+    .Main-filter {
+        grid-column: 1;
+        
+        /* width:200px; */
+        margin: 0 0 0 auto;
+
+        /* display: flex; */
+        /* justify-content:center; */
+    }
+    
+    .Main-list-article {
+        grid-column: 2;
+        grid-row: 2;
+        margin: 0 auto 0 10px;
+    }
+
+    .Filter-panel {
+        position: unset;
+        box-shadow: none;
+        font-size: 0.9em;
+    }
+
+    .Filter-panel-title {
+        margin-bottom: 8px;
+        font-size: 1.1em;
+    }
+
+    .Filter-toggle {
+        display: none;
+        position: unset;
+    }
+}
