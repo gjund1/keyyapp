@@ -10,4 +10,6 @@
     <?php require_once(__DIR__ . '/button.php'); ?>
 </main>
 
+<link rel="stylesheet" href="css/lister-filter.css">
+
 <?php require_once(__DIR__ . '/footer.php'); ?>
