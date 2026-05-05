@@ -7,11 +7,10 @@
   font-size: 1.2em;
 }
 
-.font-map {
+/* .font-map {
   font-size: 1.4em;
   color: #007bff;
-  /* cursor: pointer; */
-}
+} */
 
 /* top */
 .Main-list-top {
@@ -97,4 +96,23 @@
     color: orangered;
     /* color: green; */
     /* color: red; */
+}
+
+/* ===================== */
+/*     Couleur Status    */
+/* ===================== */
+
+.status-green {
+    color: green;
+    font-weight: bold;
+}
+
+.status-orange {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-red {
+    color: red;
+    font-weight: bold;
 }

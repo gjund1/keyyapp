@@ -13,7 +13,7 @@
     border-radius: 50%;
     background: #007bff;
     color: white;
-    font-size: 30px;
+    font-size: 38px;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0,0,0,0.3);
     z-index: 1000;
@@ -59,4 +59,10 @@
 
 .Main-button-locate:hover {
     opacity: .8;
+}
+
+.font-map {
+  font-size: 1.4em;
+  color: #007bff;
+  /* cursor: pointer; */
 }

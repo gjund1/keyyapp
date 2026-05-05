@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="css/header.css">
     <script src="js/header.js" defer></script>
-    <script src="js/data.js defer"></script>
+    <script src="js/gps.js" defer></script>
+    <script src="js/data.js"></script>
 
     <title>KeyMap</title>
 </head>
