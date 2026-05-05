@@ -12,5 +12,5 @@
     <?php else : ?>
         <a href="index.php" class="Main-button-list"><span class="material-symbols-outlined font-map">map</span></a>
     <?php endif; ?>
-    <a href="add.php" class="Main-button-add">+</a>
+    <a href="add.php" class="Main-button-add"><span class="font-add">+</span></a>
 </div>

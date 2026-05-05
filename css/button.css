@@ -17,6 +17,7 @@
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0,0,0,0.3);
     z-index: 1000;
+    transition: transform 0.2s ease;
 }
 
 /* List BUTTON */
@@ -64,5 +65,18 @@
 .font-map {
   font-size: 1.4em;
   color: #007bff;
+  transition: transform 0.2s ease;
   /* cursor: pointer; */
+}
+
+.font-map:hover {
+    transform: scale(1.1);
+}
+
+.font-add {
+  transition: transform 0.2s ease;
+}
+
+.font-add:hover {
+    transform: scale(1.2);
 }
