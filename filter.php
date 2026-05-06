@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="css/filter.css">
-<script src="js/filter.js" defer></script>
+<!-- <script src="js/filter.js" defer></script> -->
 
 <!-- Filter Button -->
 <aside class="Main-filter Filter">
@@ -10,8 +10,8 @@
         <h3 class="Filter-panel-title">Affinez votre<br>Recherche</h3>
         <br>
         <label class="Filter-panel-label">Trier par :</label>
-        <input name="tri" type="radio" name="date" checked> date
-        <input name="tri" type="radio" name="distance"> distance
+        <input type="radio" name="tri" value="date" checked> Date
+        <input type="radio" name="tri" value="distance"> Distance
 
         <br><br>
         <label class="Filter-panel-label">Filtrer par Ville :</label>

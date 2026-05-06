@@ -53,5 +53,5 @@ function error() {
 
 // Localisation temps réel
 if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(success, error, {enableHighAccuracy: true})
+    navigator.geolocation.watchPosition(success, error, {enableHighAccuracy: false})      // enableHighAccuracy: true (GPS rapide et precis)
 };

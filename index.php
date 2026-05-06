@@ -1,6 +1,7 @@
 <?php require_once(__DIR__ . '/header.php'); ?>
 
 <link rel="stylesheet" href="css/index.css">
+<script src="js/filter.js" defer></script>
 <script src="js/index.js" defer></script>
 
 <main class="Main">

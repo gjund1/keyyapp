@@ -13,6 +13,7 @@ const data = [
         region: "Bouches-du-Rhône",
         pays: "FR",
         status: "PENDING",
+        user_id: 1
     },
     {
         id: 2,
@@ -28,6 +29,7 @@ const data = [
         cp: "13004",
         pays: "FR",
         status: "VALIDATED",
+        user_id: 1
     },
     {
         id: 3,
@@ -43,6 +45,7 @@ const data = [
         cp: "13100",
         pays: "FR",
         status: "VALIDATED",
+        user_id: 1
     },
     {
         id: 4,
@@ -58,6 +61,7 @@ const data = [
         region: "Bouches-du-Rhône",
         pays: "FR",
         status: "PENDING",
+        user_id: 2
     },
     {
         id: 5,
@@ -73,6 +77,7 @@ const data = [
         cp: "13004",
         pays: "FR",
         status: "REFUSED",
+        user_id: 1
     },
     {
         id: 6,
@@ -88,6 +93,7 @@ const data = [
         cp: "13100",
         pays: "FR",
         status: "VALIDATED",
+        user_id: 2
     },
     {
         id: 7,
@@ -103,6 +109,7 @@ const data = [
         region: "Bouches-du-Rhône",
         pays: "FR",
         status: "VALIDATED",
+        user_id: 3
     },
     {
         id: 8,
@@ -118,6 +125,7 @@ const data = [
         cp: "13004",
         pays: "FR",
         status: "VALIDATED",
+        user_id: 4
     },
     {
         id: 9,
@@ -133,5 +141,6 @@ const data = [
         cp: "13100",
         pays: "FR",
         status: "VALIDATED",
+        user_id: 5
     },
 ];

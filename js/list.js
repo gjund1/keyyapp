@@ -29,28 +29,35 @@ function getUserLocation(successCallback, errorCallback) {
                 default:
                     errorCallback("Erreur inconnue");
             }
+        },
+        {
+            enableHighAccuracy: false,  // GPS plus rapide      
+            timeout: 60000,             // refreach max 60 secondes
         }
     );
 };
 
 // ------------------------------------ //
-//               GPS                    //
+//               GPS List               //
 // ------------------------------------ //
+
+// affichage instantané sans GPS
+applyFilters();
 
 // Recupere la geolocation pour la list
 getUserLocation(
     function(lat, lon) {
-        // console.log("Position OK :", lat, lon);
-        reedList(lat, lon);
+        window.userLat = lat;
+        window.userLon = lon;
+        applyFilters();
     },
     function(errorMsg) {
         console.warn(errorMsg);
-
-        // fallback (Marseille)
-        const fallbackLat = 43.2965;
-        const fallbackLon = 5.3698;
-
-        reedList(fallbackLat, fallbackLon);
+        
+        // fallback Marseille
+        window.userLat = 43.2965;
+        window.userLon = 5.3698;
+        applyFilters();
     }
 );
 
@@ -88,9 +95,9 @@ function formatDistance(distanceKm) {
     }
 };
 
-function printDistance(id, userLat, userLon) {
+// Affichage de la distance
+function printDistance(item, userLat, userLon) {
     let distance = null;
-    const item = data.find(el => el.id === id);
 
     if (item) {
         const distKm = getDistanceGPS(userLat, userLon, item.latitude, item.longitude);
@@ -137,6 +144,14 @@ function getStatusTexte(status) {
     }
 };
 
+// Affiche le Status uniquement pour mes boites
+function getStatusHtml(item, user_id) {
+    let statusHtml = "";
+    if (item.user_id === user_id) 
+        statusHtml = `statut : <span class="Item-content-statut-span ${getStatusClass(item.status)}">${getStatusTexte(item.status)}</span>`;
+    return statusHtml;
+};
+
 // ------------------------------------ //
 //               il y a 3 jours..       //
 // ------------------------------------ //
@@ -163,37 +178,31 @@ function timeAgo(date) {
 //                CARD                  //
 // ------------------------------------ //
 
+function renderList(dataArray, userLat, userLon) {
 
-function reedList(userLat, userLon) {
     const list = document.getElementById("list");
-    list.innerHTML = "";
 
-    data.forEach(item => {
-        const card = document.createElement("a");
-        card.className = "Main-list-article-link";
-        card.href=`fiche.php?id=${item.id}`;
-
-        card.innerHTML = `
+    const html = dataArray.map(item => `
+        <a href="fiche.php?id=${item.id}" class="Main-list-article-link">
             <article class="Main-list-article-link-item Item">
                 <img src="${item.image}" class="Item-photo">
                 <div class="Item-content">
                     <div class="Item-content-box">
-                        <p class="Item-content-box-ville"><span class="Item-content-box-ville-span">${item.city}</span> (${item.cp})</p>
-                        <p class="Item-content-box-dep"> ${item.region} (${item.pays})</p>
+                        <p class="Item-content-box-ville">
+                            <span class="Item-content-box-ville-span">${item.city}</span> (${item.cp})</p>
+                        <p class="Item-content-box-dep">${item.region} (${item.pays})</p>
                     </div>
-                    <p class="Item-content-quartier">Quartier : ${item.quartier} </p>
+                    <p class="Item-content-quartier">Quartier : ${item.quartier}</p>
                     <br><br>
                     <p class="Item-content-date">${timeAgo(item.created_at)}</p>
                     <div class="Item-content-box">
-                        <p class="Item-content-box-km">Distance : ${printDistance(item.id, userLat, userLon)}</p>
-                        <p class="Item-content-statut">statut : <span class="Item-content-statut-span ${getStatusClass(item.status)}">${getStatusTexte(item.status)}</span></p>
+                        <p class="Item-content-box-km">Distance : ${item.distance !== null && item.distance !== undefined ? formatDistance(item.distance) : "..."}</p>
+                        <p class="Item-content-statut">${getStatusHtml(item, 1)}</p>
                     </div>
                 </div>
             </article>
-        `;
+        </a>
+    `).join("");
 
-        list.appendChild(card);
-    });
-}
-
-// reedList();
+    list.innerHTML = html;
+};
