@@ -37,6 +37,9 @@
     border-radius: 40px 0 0 40px;
     cursor: pointer;
     z-index: 1001;
+
+    display: flex;
+    justify-content: center;
 }
 
 .Filter-panel-title {
@@ -57,10 +60,10 @@ option {
 }
 
 .font-arrow {
-    font-size: 2em;
+    font-size: 2.1em;
     transition: transform 0.2s ease;
 }
 
 .font-arrow:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }

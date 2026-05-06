@@ -3,7 +3,9 @@
 
 <!-- Filter Button -->
 <aside class="Main-filter Filter">
-    <div class="Filter-toggle"><span class="material-symbols-outlined font-arrow">arrow_right</span></div>
+    <div class="Filter-toggle">
+        <span class="material-symbols-outlined font-arrow">arrow_right</span>
+    </div>
     <div class="Filter-panel">
         <h3 class="Filter-panel-title">Affinez votre<br>Recherche</h3>
         <br>
