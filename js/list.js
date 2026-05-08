@@ -9,30 +9,37 @@ function getUserLocation(successCallback, errorCallback) {
         return;
     };
 
+    // Tentative GPS rapide/précis
     navigator.geolocation.getCurrentPosition(
         function(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            successCallback(lat, lon);
+            successCallback(position.coords.latitude, position.coords.longitude);
         },
+
         function(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    errorCallback("Permission refusée");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    errorCallback("Position indisponible");
-                    break;
-                case error.TIMEOUT:
-                    errorCallback("Temps dépassé");
-                    break;
-                default:
-                    errorCallback("Erreur inconnue");
+            if (error.code === error.TIMEOUT) {
+                console.warn("GPS précis timeout -> mode éco");
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        successCallback(position.coords.latitude, position.coords.longitude);
+                    },
+
+                    function(error) {
+                        errorCallback(error.message);
+                    },
+                    {
+                        enableHighAccuracy: false,
+                        timeout: 15000,
+                        maximumAge: 300000
+                    }
+                );
+            } else {
+                errorCallback(error.message);
             }
         },
         {
-            enableHighAccuracy: false,  // GPS plus rapide      
-            timeout: 60000,             // refreach max 60 secondes
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
         }
     );
 };
@@ -40,6 +47,12 @@ function getUserLocation(successCallback, errorCallback) {
 // ------------------------------------ //
 //               GPS List               //
 // ------------------------------------ //
+
+const cachedLat = localStorage.getItem("userLat");
+const cachedLon = localStorage.getItem("userLon");
+
+window.userLat = cachedLat ? parseFloat(cachedLat) : 43.2965;
+window.userLon = cachedLon ? parseFloat(cachedLon) : 5.3698;
 
 // affichage instantané sans GPS
 applyFilters();
@@ -49,6 +62,12 @@ getUserLocation(
     function(lat, lon) {
         window.userLat = lat;
         window.userLon = lon;
+
+        // cache GPS
+        localStorage.setItem("userLat", lat);
+        localStorage.setItem("userLon", lon);
+        // localStorage.setItem("gpsTimestamp", Date.now());
+
         applyFilters();
     },
     function(errorMsg) {

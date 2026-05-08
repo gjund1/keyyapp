@@ -11,33 +11,61 @@ toggleBtn.addEventListener("click", () => {
 const filters = {
     sort: "date",
     city: null,
-    mesBoites: true
+    mesBoites: false
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+// Sauvegarder les filtres
+function saveFilters() {
+    localStorage.setItem("filters", JSON.stringify(filters));
+}
 
+const savedFilters = localStorage.getItem("filters");
+if (savedFilters) {Object.assign(filters, JSON.parse(savedFilters));}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Restaurer état UI depuis localStorage
+    // TRI
+    const triInput = document.querySelector(`input[name="tri"][value="${filters.sort}"]`);
+    if (triInput)
+        triInput.checked = true;
+
+    // VILLE
+    const citySelect = document.querySelector("select");
+    if (citySelect)
+        citySelect.value = filters.city || "";
+
+    // MES BOITES
+    const checkbox = document.querySelector('input[name="mesboites"]');
+    if (checkbox)
+        checkbox.checked = filters.mesBoites;
+
+    // EVENTS
     // TRI
     document.querySelectorAll('input[name="tri"]').forEach(input => {
         input.addEventListener("change", (e) => {
             filters.sort = e.target.value;
+            localStorage.setItem("filters", JSON.stringify(filters));
             applyFilters();
         });
     });
 
     // VILLE
-    const citySelect = document.querySelector("select");
-    citySelect.addEventListener("change", (e) => {
-        filters.city = e.target.value;
-        applyFilters();
-    });
+    if (citySelect) {
+        citySelect.addEventListener("change", (e) => {
+            filters.city = e.target.value;
+            localStorage.setItem("filters", JSON.stringify(filters));
+            applyFilters();
+        });
+    }
 
     // MES BOITES
-    const checkbox = document.querySelector('input[name="mesboites"]');
-    checkbox.addEventListener("change", (e) => {
-        filters.mesBoites = e.target.checked;
-        applyFilters();
-    });
-
+    if (checkbox) {
+        checkbox.addEventListener("change", (e) => {
+            filters.mesBoites = e.target.checked;
+            localStorage.setItem("filters", JSON.stringify(filters));
+            applyFilters();
+        });
+    }
 });
 
 // Remplir les villes dans le Panel filter dynamiquement
@@ -80,6 +108,13 @@ function applyFilters() {
         filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
 
-    // renderList
-    renderList(filtered, window.userLat, window.userLon);
+    // PAGE LISTE
+    if (typeof renderList === "function") {
+        renderList(filtered, window.userLat, window.userLon);
+    }
+
+    // PAGE MAP
+    if (typeof renderMap === "function") {
+        renderMap(filtered);
+    }
 };

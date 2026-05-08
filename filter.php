@@ -19,6 +19,6 @@
             <option>Marseille</option>
         </select>
         <br><br>
-        <input type="checkbox" name="mesboites" checked> Mes boites
+        <input type="checkbox" name="mesboites"> Mes boites
     </div>
 </aside>
