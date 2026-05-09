@@ -16,12 +16,8 @@
 
     .Main-filter {
         grid-column: 1;
-        
         /* width:200px; */
         margin: 0 0 0 auto;
-
-        /* display: flex; */
-        /* justify-content:center; */
     }
     
     .Main-list-article {
@@ -44,5 +40,12 @@
     .Filter-toggle {
         display: none;
         position: unset;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .Item-content-box-cp, .Item-content-box-pays {
+        display: none;
     }
 }

@@ -67,3 +67,12 @@ option {
 .font-arrow:hover {
     transform: scale(1.2);
 }
+
+.Filter-panel-count {
+    font-size: 0.88rem;
+    /* opacity: 0.7; */
+    font-style: italic;
+    font-weight: bold;
+    color: #007bff;
+    text-shadow: -2px 0 5px rgba(0,0,0,0.2);
+}

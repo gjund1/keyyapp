@@ -104,7 +104,7 @@ function renderMap(dataArray) {
         const url = `fiche.php?id=${item.id}`;
         const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}`;
         const popup = `
-            <div style="min-width:150px">
+            <div class="popup">
                 <strong>${item.city}</strong> (id ${item.id})<br>
                 ${item.address || "Adresse inconnue"}<br><br>
                 <a href="${url}">🔎 Voir la fiche</a><br>

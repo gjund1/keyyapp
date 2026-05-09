@@ -3,3 +3,7 @@
 .leaflet-top.leaflet-left {
     top: 5px;
 }
+
+.popup {
+    min-width:150px;
+}

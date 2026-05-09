@@ -8,6 +8,7 @@
     </div>
     <div class="Filter-panel">
         <h3 class="Filter-panel-title">Affinez votre<br>Recherche</h3>
+        <p class="Filter-panel-count"></p>
         <br>
         <label class="Filter-panel-label">Trier par :</label>
         <input type="radio" name="tri" value="date" checked> Date

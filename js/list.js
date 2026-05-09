@@ -171,6 +171,11 @@ function getStatusHtml(item, user_id) {
     return statusHtml;
 };
 
+function getStatusClassItem(item, user_id) {
+    if (item.user_id === user_id) 
+        return "myItem";
+}
+
 // ------------------------------------ //
 //               il y a 3 jours..       //
 // ------------------------------------ //
@@ -179,18 +184,26 @@ function timeAgo(date) {
     const now = new Date();
     const diff = Math.floor((now - date) / 1000);
 
-    if (diff < 60) 
+    if (diff < 60)
         return "Ajoutée à l’instant";
-    if (diff < 3600) 
-        return `Ajoutée il y a ${Math.floor(diff / 60)} minutes`;
-    if (diff < 86400) 
-        return `Ajoutée il y a ${Math.floor(diff / 3600)} heures`;
-    if (diff < 2592000) 
-        return `Ajoutée il y a ${Math.floor(diff / 86400)} jours`;
-    if (diff < 31536000) 
-        return `Ajoutée il y a ${Math.floor(diff / 2592000)} mois`;
-    
-    return `Ajoutée il y a ${Math.floor(diff / 31536000)} an`;
+    if (diff < 3600) {
+        const minutes = Math.floor(diff / 60);
+        return `Ajoutée il y a ${minutes} minute${minutes > 1 ? "s" : ""}`;
+    }
+    if (diff < 86400) {
+        const hours = Math.floor(diff / 3600);
+        return `Ajoutée il y a ${hours} heure${hours > 1 ? "s" : ""}`;
+    }
+    if (diff < 2592000) {
+        const days = Math.floor(diff / 86400);
+        return `Ajoutée il y a ${days} jour${days > 1 ? "s" : ""}`;
+    }
+    if (diff < 31536000) {
+        const months = Math.floor(diff / 2592000);
+        return `Ajoutée il y a ${months} mois`;
+    }
+    const years = Math.floor(diff / 31536000);
+    return `Ajoutée il y a ${years} an${years > 1 ? "s" : ""}`;
 }
 
 // ------------------------------------ //
@@ -198,22 +211,26 @@ function timeAgo(date) {
 // ------------------------------------ //
 
 function renderList(dataArray, userLat, userLon) {
-
     const list = document.getElementById("list");
 
     const html = dataArray.map(item => `
         <a href="fiche.php?id=${item.id}" class="Main-list-article-link">
-            <article class="Main-list-article-link-item Item">
+            <article class="Main-list-article-link-item Item ${getStatusClassItem(item, 1)}">
                 <img src="${item.image}" class="Item-photo">
                 <div class="Item-content">
                     <div class="Item-content-box">
                         <p class="Item-content-box-ville">
-                            <span class="Item-content-box-ville-span">${item.city}</span> (${item.cp})</p>
-                        <p class="Item-content-box-dep">${item.region} (${item.pays})</p>
+                            <span class="Item-content-box-ville-span">${item.city}</span>
+                            <span class="Item-content-box-cp"> (${item.cp})</span>
+                        </p>
+                        <p class="Item-content-box-dep">${item.region}
+                            <span class="Item-content-box-pays"> (${item.pays})</span>
+                        </p>
                     </div>
-                    <p class="Item-content-quartier">Quartier : ${item.quartier}</p>
-                    <br><br>
-                    <p class="Item-content-date">${timeAgo(item.created_at)}</p>
+                    <div class="Item-content-inside">
+                        <p class="Item-content-quartier">Quartier : ${item.quartier}</p>
+                        <p class="Item-content-date">${timeAgo(item.created_at)}</p>
+                    </div>
                     <div class="Item-content-box">
                         <p class="Item-content-box-km">Distance : ${item.distance !== null && item.distance !== undefined ? formatDistance(item.distance) : "..."}</p>
                         <p class="Item-content-statut">${getStatusHtml(item, 1)}</p>

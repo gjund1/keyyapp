@@ -2,11 +2,24 @@
 const toggleBtn = document.querySelector(".Filter-toggle");
 const panel = document.querySelector(".Filter-panel");
 
-toggleBtn.addEventListener("click", () => {
+// OUVRIR / FERMER le panel
+toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
     panel.classList.toggle("active");
 });
 
-// Fliter date / distance
+// empêcher fermeture quand on clique DANS le panel
+panel.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+
+// fermer quand on clique ailleurs
+document.addEventListener("click", () => {
+    panel.classList.remove("active");
+});
+
+// ===================================
+// Fliter date / distance / mes Boites
 
 const filters = {
     sort: "date",
@@ -79,6 +92,7 @@ function populateCities() {
 }
 
 populateCities();
+applyFilters();
 
 function applyFilters() {
 
@@ -108,6 +122,16 @@ function applyFilters() {
         filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
 
+    // Compteur de boites
+    const countElement = document.querySelector(".Filter-panel-count");
+    if (countElement)
+        countElement.textContent = `${filtered.length} boîte${filtered.length > 1 ? "s" : ""} trouvée${filtered.length > 1 ? "s" : ""}`;
+
+    // compteur top page liste
+    const topCount = document.querySelector(".Main-list-top-count");
+    if (topCount)
+        topCount.innerHTML = `&nbsp;(${filtered.length} boîte${filtered.length > 1 ? "s" : ""} trouvée${filtered.length > 1 ? "s" : ""})`;
+    
     // PAGE LISTE
     if (typeof renderList === "function") {
         renderList(filtered, window.userLat, window.userLon);
