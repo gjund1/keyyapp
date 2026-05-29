@@ -214,7 +214,7 @@ function renderList(dataArray, userLat, userLon) {
     const list = document.getElementById("list");
 
     const html = dataArray.map(item => `
-        <a href="fiche.php?id=${item.id}" class="Main-list-article-link">
+        <a href="card.php?id=${item.id}" class="Main-list-article-link">
             <article class="Main-list-article-link-item Item ${getStatusClassItem(item, 1)}">
                 <img src="${item.image}" class="Item-photo">
                 <div class="Item-content">

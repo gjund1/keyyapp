@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png"> -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <meta name="description" content="Recenser et visualiser les boîtes à clés observés dans l’espace public.">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="css/header.css">
@@ -26,7 +28,9 @@
             <!-- <a href="mentions.php" class="Menu-item">Mentions légales</a> -->
             <a href="contact.php" class="Header-laptop-item">Contact</a>
         </div>
-        <div class="Header-avatar">G</div>
+        <div class="Header-avatar">
+            <a href="login.php">G</a>
+        </div>
     </header>
 
  <!-- MENU -->

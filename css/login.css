@@ -1,0 +1,92 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Main {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    gap: 80px;
+
+    width: 260px;
+}
+
+.Main-title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.Main-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.Main-form-login,
+.Main-form-pwd {
+    width: 260px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.Main-form-login:focus,
+.Main-form-pwd:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* .Main-form-btn {
+    margin-top: 20px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.Main-form-btn:hover {
+    background: #2563eb;
+} */
+
+.Main-form-pwd-oublie {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    text-align: right;
+}
+
+.Main-form-pwd-oublie:hover {
+    text-decoration: underline;
+    color: #3b82f6;
+}
+
+.Main-pascompte {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.Main-pascompte-a {
+    cursor: pointer;
+}
+
+.Main-pascompte-a:hover {
+    text-decoration: underline;
+    color: #3b82f6;
+}

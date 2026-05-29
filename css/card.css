@@ -1,0 +1,181 @@
+/* ======================== */
+/*          CARD            */
+/* ======================== */
+
+/* Google fonts */
+.font-back {
+  font-size: 1.2em;
+}
+
+/* .font-map {
+  font-size: 1.4em;
+  color: #007bff;
+} */
+
+/* top */
+.Main-card-top {
+    display: flex;
+    justify-content: center;
+    grid-column: 1 / 3;
+    padding: 12px 30px;
+    border-bottom: 2px solid #e0e0e0;
+    height: 40px;
+}
+
+.Main-card-top-back {
+    position: absolute;
+    left: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.Main-card-top-back:hover {
+    color: #007bff;
+}
+
+.Main-card-top-title {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* MAP */
+
+.Main-card-map {
+    width: 100%;
+    height: 30vh;
+    min-height: 180px;
+    border-bottom: 1px solid #e0e0e0;
+
+    grid-column: 1 / 3;
+}
+
+/* MAIN BOX */
+
+.Main-card-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    font-size: .85em;
+    /* margin: 0 auto;    */
+
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* PHOTO */
+
+.Main-card-photo {
+    width: 220px;
+    height: 180px;
+    /* padding: 10px; */
+    margin: 15px;
+    object-fit: cover;
+    border-radius: 4px;
+
+    grid-column: 1 / 2;
+}
+
+/* DETAIL */
+.Main-card-content1{
+    margin: 15px;
+}
+
+.Main-card-content2{
+    width: 100%;
+
+    margin: 0 15px 15px 15px;
+    padding-top: 15px;
+    border-top: 2px solid #f2f2f2;
+
+
+    /* display: grid; */
+    /* grid-column: 1fr 1fr; */
+    grid-column: 1 / 3;
+}
+
+.Main-card-content2-adresse{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.Main-card-content2-coment{
+    margin: 15px;
+    display: flex;
+    justify-content:left;
+}
+
+.Main-card-content2-city{
+    grid-column: 1 / 2;
+    grid-row: 1;
+}
+
+.Main-card-content2-dep{
+    grid-column: 2 / 3;
+    grid-row: 1;
+}
+
+/* BOUTTON */
+
+.Main-card-content2-btn{
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 15px;
+}
+
+.Btn {
+    padding: 12px 32px;
+}
+
+
+/* =================================== */
+/*          MediaQuery                 */
+/* =================================== */
+
+@media (min-width: 968px) {
+
+    .Main-card-box {
+        max-width: none;
+        font-size: 1em;
+        /* position: relative; */
+    }
+
+    .Main-card-map {
+        width: 400px;
+        height: 300px;
+        margin: 15px auto;
+        /* object-fit: cover; */
+        border-radius: 4px;
+
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .Main-card-photo {
+        width: 400px;
+        height: 300px;
+        margin: 0 auto;
+
+        grid-column: 1 / 2;
+    }
+
+    .Main-card-content2{
+        border-top: none;
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+
+    .Main-card-content2-coment {
+        padding: 20px;
+    }
+
+    .Main-card-content2-btn {
+        padding-top: 20px;
+        justify-content: left;
+    }
+
+}

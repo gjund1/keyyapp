@@ -79,12 +79,12 @@ if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(success, error, {enableHighAccuracy: true, timeout: 10000, maximumAge: 0}
     );
 
-    // Après 1 minute -> mode économie
+    // Après 20 minute -> mode économie
     setTimeout(() => {
         navigator.geolocation.clearWatch(watchId);
-        watchId = navigator.geolocation.watchPosition(success, error, {enableHighAccuracy: false, timeout: 15000, maximumAge: 300000});
+        watchId = navigator.geolocation.watchPosition(success, error, {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000});
         console.log("GPS mode économie activé");
-    }, 60000);              // 1 minute
+    }, 1200000);              // 20 minute
 }
 
 // ==============================
