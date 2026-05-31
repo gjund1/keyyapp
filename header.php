@@ -20,9 +20,9 @@
     <!-- Header Nav-->
     <header class="Header">
         <div class="Header-menu">☰</div>
-        <a href="index.php" class="Header-logo">KeyMap</a>
+        <a href="index.php" class="Header-logo">Keyy<span>App</span></a>
         <div class="Header-laptop">
-            <a href="profil.php" class="Header-laptop-item">Mon profil</a>
+            <a href="dashboard.php" class="Header-laptop-item">Mon profil</a>
             <a href="liste.php" class="Header-laptop-item">Ma liste</a>
             <a href="faq.php" class="Header-laptop-item">FAQ</a>
             <!-- <a href="mentions.php" class="Menu-item">Mentions légales</a> -->
@@ -41,7 +41,7 @@
             <div class="Menu-header-closeBtn">✖</div>
         </div>
         <div class="Menu-content">
-            <a href="profil.php" class="Menu-item">👤 Mon profil</a>
+            <a href="dashboard.php" class="Menu-item">👤 Mon profil</a>
             <a href="liste.php" class="Menu-item">📋 Ma liste</a>
             <a href="faq.php" class="Menu-item">❓ FAQ</a>
             <a href="mentions.php" class="Menu-item">📄 Mentions légales</a>

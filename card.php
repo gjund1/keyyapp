@@ -29,12 +29,12 @@
                 <p>Longitude : 5.4001664</p><br>
                 <p>Distance :  1,4 km</p><br>
                 <p>Ajouté le 19 février 2026 à 14:32</p><br><br>
-                <p>Affichage : Public</p>
-                <p>Statut : Validé</p>
+                <p>Affichage : <i>Public</i></p>
+                <p>Statut : <span class="Main-card-content1-status-span">Validé</span></p>
             </div>
             <div class="Main-card-content2">
                 <div class="Main-card-content2-adresse">
-                    <p class="Main-card-content2-city">Marseilles (13002)</p>
+                    <p class="Main-card-content2-city"><span class="Main-card-content2-city-span">Marseilles</span> (13002)</p>
                     <p class="Main-card-content2-dep">Bouches-du-Rhône (FR)</p>
                     <p class="Main-card-content2-street">Rue Ferdinand Rey</p>
                     <p class="Main-card-content2-quartier">Quartier : La Plaine</p>

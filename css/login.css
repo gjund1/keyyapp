@@ -9,7 +9,7 @@ body {
     flex-direction: column;
     justify-content:center;
     align-items:center;
-    gap: 80px;
+    gap: 50px;
 
     width: 260px;
 }
@@ -28,8 +28,7 @@ body {
     gap: 5px;
 }
 
-.Main-form-login,
-.Main-form-pwd {
+.InputLogin {
     width: 260px;
     padding: 12px;
     margin-bottom: 15px;
@@ -39,8 +38,7 @@ body {
     transition: 0.2s;
 }
 
-.Main-form-login:focus,
-.Main-form-pwd:focus {
+.InputLogin:focus {
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
 }
@@ -89,4 +87,62 @@ body {
 .Main-pascompte-a:hover {
     text-decoration: underline;
     color: #3b82f6;
+}
+
+/* Mot de passe visible */
+.pwd-wrapper{
+    position:relative;
+    width:100%;
+}
+
+.togglePwd{
+    position:absolute;
+    right:10px;
+    top:40%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    user-select:none;
+}
+
+.pwd-oeil {
+    top: 30%;
+}
+
+/* 2e pwd */
+.InputLogin.pwd-valid {
+    border: 2px solid #22c55e;
+}
+
+.InputLogin.pwd-invalid {
+    border: 2px solid #ef4444;
+}
+
+.Main-form-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============== */
+/*     LOGIN      */
+/* ============== */
+
+.toast-success {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #22c55e;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 9999;
+    animation: fade 3s forwards;
+}
+
+@keyframes fade {
+    0% { opacity: 0; transform: translate(-50%, -20px); }
+    10% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
 }

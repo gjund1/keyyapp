@@ -101,7 +101,7 @@ function renderMap(dataArray) {
 
         const color = item.user_id === window.myUserId ? "#308aff" : "#c234c7cb";
         const marker = L.marker([item.latitude, item.longitude], {icon: createPin(color)}).addTo(map);
-        const url = `fiche.php?id=${item.id}`;
+        const url = `card.php?id=${item.id}`;
         const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}`;
         const popup = `
             <div class="popup">

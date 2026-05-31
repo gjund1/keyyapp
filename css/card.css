@@ -101,6 +101,13 @@
     grid-template-columns: 1fr 1fr;
 }
 
+.Main-card-content1-status-span {
+    font-weight: bold;
+    /* color: orangered; */
+    color: green;
+    /* color: red; */
+}
+
 .Main-card-content2-coment{
     margin: 15px;
     display: flex;
@@ -110,6 +117,10 @@
 .Main-card-content2-city{
     grid-column: 1 / 2;
     grid-row: 1;
+}
+
+.Main-card-content2-city-span {
+    font-weight: bold;
 }
 
 .Main-card-content2-dep{
@@ -178,4 +189,35 @@
         justify-content: left;
     }
 
+}
+
+@media screen and (max-width: 480px) {
+
+    .Item-content-box-cp, .Item-content-box-pays {
+        display: none;
+    }
+
+    .Main-card-map {
+        height: 27vh;
+        min-height: 160px;
+    }
+
+    .Main-card-photo {
+        width: 200px;
+        height: 170px;
+        margin: 10px;
+    }
+
+    .Main-card-content1{
+        margin: 5px 7px 5px 0;
+    }
+
+    .Main-card-content2{
+        margin: 0 10px 10px 10px;
+        padding-top: 10px;
+    }
+
+    .Main-card-content2-btn{
+        padding: 0;
+    }
 }

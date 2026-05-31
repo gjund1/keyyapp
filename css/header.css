@@ -37,14 +37,21 @@ a:hover {
 }
 
 .Header-logo {
-    font-weight: bold;
-    font-size: 18px;
+    font-weight:bolder;
+    font-size: 20px;
+    text-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    color: rgb(80, 79, 79);
+}
+
+.Header-logo span{
+    font-style: italic;
+    color: #007bff;
 }
 
 .Header-logo:hover {
     font-weight: bold;
-    font-size: 18px;
-    color: #007bff;
+    font-size: 20px;
+    /* color: #007bff; */
     opacity: .8;
 }
 
@@ -53,7 +60,8 @@ a:hover {
 }
 
 .Header-menu {
-    font-size: 22px;
+    /* font-size: 22px; */
+    font-size: 30px;
     cursor: pointer;
 }
 

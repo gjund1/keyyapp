@@ -1,22 +1,59 @@
-<?php session_start(); ?>
+<?php
+require_once(__DIR__ . '/config.php');
+
+if (isLogged()) {
+    header("Location: dashboard.php");
+    exit();
+}
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST["email"]);
+    $pwd = $_POST["pwd"];
+
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($pwd, $user["pwd_hash"])) {
+        $_SESSION["id"] = $user["id"];
+        $_SESSION["name"] = $user["name"];
+        $_SESSION["role"] = $user["role"];
+        header("Location: dashboard.php");
+        exit();
+
+    } else {
+        $message = "Email ou mot de passe incorrect";
+    }
+}
+?>
+
 <?php require_once(__DIR__ . '/header.php'); ?>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/login.css">
 <script src="js/login.js" defer></script>
 
 <main class="Main-map Main">
     <div class="Main-title">
+        <?php if (isset($_GET['register']) && $_GET['register'] === 'success'): ?>
+            <div class="toast-success">Compte créé avec succès !</div>
+        <?php endif; ?>
         <!-- <img class="Main-title-img" src="img/favicon.png" alt="KeyyApp"> -->
         <p>Connectez-vous à votre compte</p>
     </div>
+    <p><?= $message ?></p>
 
     <div class="Main-form">
         <form action="login.php" method="post">
-            <input type="text" class="Main-form-login" name="login" required placeholder="Adresse email"><br>
-            <div class="Main-form-pwd-wrapper">
-                <input type="password" class="Main-form-pwd" name="mot_de_passe" required placeholder="Mot de passe"><br>
+            <input type="email" name="email" class="Main-form-login InputLogin" required placeholder="Adresse email"><br>
+            <div class="pwd-wrapper">
+                <input type="password" id="pwd" name="pwd" class="Main-form-pwd InputLogin" required placeholder="Mot de passe"><br>
                 <p class="Main-form-pwd-oublie">Mot de passe oublié</p>
+                <span class="togglePwd pwd-oeil" data-target="pwd"><i class="fa-solid fa-eye"></i></span>
             </div>
             <button class="Main-form-btn Btn" type="submit">Se connecter</button>
         </form>
