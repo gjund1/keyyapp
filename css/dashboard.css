@@ -1,0 +1,99 @@
+.Main {
+    background:#f5f7fb; 
+}
+
+.Main-card, .Main-liste {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Main-list-dash, .Main-card-dash {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 700px;
+    background: white;
+    margin: 25px;
+    padding: 20px;
+    border-radius:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.Main-card-dash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.Main-liste-dash {
+    display: flex;
+    flex-direction: column;
+}
+
+.Main-dash-deconnection {
+    display: block;
+    margin: 50px auto;
+    width: fit-content;
+    box-shadow:2px 2px 10px rgba(0,0,0,.08);
+
+    background: #3b82f6;
+    padding: 10px 22px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.Main-dash-card-logo {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    width: 80px;
+    height: 80px;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 100%;
+    font-size: 2.2em;
+    opacity: 0.8;
+}
+
+.Main-dash-card-user {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: rgb(44, 44, 44);
+    text-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+}
+
+.Main-dash-card-role {
+    background: rgba(128, 128, 128, 0.2);
+    padding: 6px 18px 4px 18px;
+    border-radius: 20px;
+    color: gray;
+}
+
+.Main-dash-card-date {
+    font-style: italic;
+    font-size: 0.8em;
+    opacity: 0.9;
+}
+
+.Main-dash-liste-title {
+    padding-bottom: 8px;
+}
+
+.Main-dash-liste-box {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    font-size: 1em;
+}
+
+.Main-dash-liste-box-voir {
+    background: #3b82f6;
+    padding: 7px 12px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+}

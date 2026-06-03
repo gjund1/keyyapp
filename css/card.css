@@ -99,6 +99,9 @@
 .Main-card-content2-adresse{
     display: grid;
     grid-template-columns: 1fr 1fr;
+
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f2f2f2;
 }
 
 .Main-card-content1-status-span {

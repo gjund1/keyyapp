@@ -15,12 +15,12 @@ function getRole(): string
 // Réservé aux admins
 function isAdmin(): bool
 {
-    return getRole() === 'admin';
+    return getRole() === 'ADMIN';
 }
 
 function isModerator(): bool
 {
-    return in_array(getRole(), ['admin', 'moderator']);
+    return in_array(getRole(), ['ADMIN', 'MODERATEUR']);
 }
 
 function requireLogin(): void

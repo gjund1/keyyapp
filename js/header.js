@@ -10,3 +10,13 @@ menuBtn.addEventListener("click", () => {
 closeMenu.addEventListener("click", () => {
     menuOverlay.classList.remove("active");
 });
+
+// fermeture en cliquant à côté
+document.addEventListener("click", (e) => {
+    const isClickInsideMenu = menuOverlay.contains(e.target);
+    const isClickOnButton = menuBtn.contains(e.target);
+
+    if (!isClickInsideMenu && !isClickOnButton) {
+        menuOverlay.classList.remove("active");
+    }
+});
