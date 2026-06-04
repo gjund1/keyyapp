@@ -19,7 +19,7 @@
     max-width: 700px;
     background: white;
     margin: 15px;
-    padding: 20px;
+    padding: 15px;
     border-radius:20px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
@@ -29,6 +29,8 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+
+    position: relative;
 }
 
 .Main-liste-dash {
@@ -70,11 +72,19 @@
     text-shadow: 2px 2px 1px rgba(0,0,0,0.2);
 }
 
+.Main-dash-card-user span{
+    font-size: 0.4em;
+
+    display: inline-block;
+    transform: rotate(90deg);
+}
+
 .Main-dash-card-role {
     background: rgba(128, 128, 128, 0.2);
-    padding: 6px 18px 4px 18px;
+    padding: 5px 18px;
     border-radius: 20px;
     color: gray;
+    font-size: 0.8em;
 }
 
 .Main-dash-card-date {
@@ -83,15 +93,26 @@
     opacity: 0.9;
 }
 
+.Main-dash-card-id {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    font-style: italic;
+    font-size: 0.65em;
+    opacity: 0.7;
+}
+
 .Main-dash-liste-title {
     padding-bottom: 8px;
+    font-size: 1em;
 }
 
 .Main-dash-liste-box {
     display: flex;
     justify-content:space-between;
     align-items: center;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
 .Main-dash-liste-box-voir {
@@ -100,4 +121,5 @@
     border-radius: 20px;
     color: white;
     font-weight: bold;
+    font-size: 1em;
 }
