@@ -1,6 +1,6 @@
-// ===============
-//     SignIn
-// ===============
+// ===================
+//   Visibility PWD
+// ===================
 
 const togglePwd = document.querySelectorAll('.togglePwd');
 
@@ -14,6 +14,10 @@ togglePwd.forEach(btn => {
         icon.classList.toggle('fa-eye-slash');
     });
 });
+
+// =========================
+//    SignIn PWD 8 minimum
+// ========================
 
 const pwd1 = document.getElementById('pwd');
 const pwd2 = document.getElementById('pwd2');
@@ -38,13 +42,9 @@ function checkPasswords() {
     }
 }
 
-// IMPORTANT : déclenchement immédiat
-pwd1.addEventListener('input', checkPasswords);
-pwd2.addEventListener('input', checkPasswords);
-
-// état initial
-checkPasswords();
-
-// ==============
-//      Login
-// ==============
+// protection page login vs signup
+if (pwd1 && pwd2 && submitBtn) {
+    pwd1.addEventListener('input', checkPasswords);
+    pwd2.addEventListener('input', checkPasswords);
+    checkPasswords();
+}

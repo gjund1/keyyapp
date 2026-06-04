@@ -34,7 +34,7 @@ function dateFr() {
 
     <div class="Main-liste">
         <div class="Main-dash-liste">
-            <a href="liste.php">
+            <a href="liste.php?mesboites=1&tri=date&city=">
             <div class="Main-list-dash">
                 <h3 class="Main-dash-liste-title">Ma liste</h3>
                 <div class="Main-dash-liste-box">
