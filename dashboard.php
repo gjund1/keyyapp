@@ -26,7 +26,7 @@ function dateFr() {
     <div class="Main-card">
         <div class="Main-card-dash">
             <div class="Main-dash-card-logo"><?= strtoupper($_SESSION["name"][0]) ?></div>
-            <div class="Main-dash-card-user"><?= $_SESSION["name"] ?><span> ✏️</span></div>
+            <div class="Main-dash-card-user">&nbsp;&nbsp;<?= $_SESSION["name"] ?> <span class="material-symbols-outlined font-edit">border_color</span></div>
             <div class="Main-dash-card-role"><?= $_SESSION["role"] ?></div>
             <div class="Main-dash-card-date">inscrit le <?= dateFr() ?></div>
             <div class="Main-dash-card-id">ID: <?= $_SESSION["id"] ?></div>

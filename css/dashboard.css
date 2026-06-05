@@ -1,3 +1,14 @@
+.font-edit {
+    color: gray;
+    font-size: 0.5em;
+    cursor: pointer;
+}
+
+.font-edit:hover {
+    color: #3b82f6;
+    opacity: 0.8;
+}
+
 .Main {
     background:#f5f7fb; 
 }
@@ -72,13 +83,6 @@
     text-shadow: 2px 2px 1px rgba(0,0,0,0.2);
 }
 
-.Main-dash-card-user span{
-    font-size: 0.4em;
-
-    display: inline-block;
-    transform: rotate(90deg);
-}
-
 .Main-dash-card-role {
     background: rgba(128, 128, 128, 0.2);
     padding: 5px 18px;
@@ -123,3 +127,50 @@
     font-weight: bold;
     font-size: 1em;
 }
+
+/* =================================== */
+/*           Desktop >= 968px          */
+/* =================================== */
+
+@media (min-width: 968px) {
+
+    .Main {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .Main-card {
+        max-width: 350px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .Main-liste {
+        max-width: 800px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .Main-card-dash,
+    .Main-list-dash {
+        margin: 20px 0;
+        padding: 25px;
+    }
+
+    .Main-dash-card-user {
+        font-size: 2em;
+    }
+
+    .Main-dash-liste-title {
+        font-size: 1.1em;
+    }
+
+    .Main-dash-liste-box-voir {
+        font-size: 1.2em;
+    }
+}
+
