@@ -1,3 +1,14 @@
+<?php
+function roleUserClass($role) {
+    return match ($role) {
+        "ADMIN" => "user-admin",
+        "MODERATOR" => "user-moderator",
+        "USER" => "user-user",
+        default => "user-visitor"
+    };
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -10,8 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="css/header.css">
     <script src="js/header.js" defer></script>
-    <!-- <script src="js/gps.js" defer></script> -->
-    <script src="js/data.js"></script>
+    <!-- <script src="js/data.js"></script> -->
 
     <title>KeyMap</title>
 </head>
@@ -28,8 +38,8 @@
             <!-- <a href="mentions.php" class="Menu-item">Mentions légales</a> -->
             <a href="contact.php" class="Header-laptop-item">Contact</a>
         </div>
-        <div class="Header-avatar">
-            <a href="login.php">G</a>
+        <div class="Header-avatar Card-logo <?= roleUserClass(getRole()) ?>">
+            <a class="Card-logo-a" href="login.php"><?= strtoupper($_SESSION["name"][0] ?? 'U') ?></a>
         </div>
     </header>
 

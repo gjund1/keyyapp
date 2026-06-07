@@ -181,6 +181,10 @@ function getStatusClassItem(item, user_id) {
 // ------------------------------------ //
 
 function timeAgo(date) {
+    date = new Date(date);
+    if (isNaN(date.getTime()))
+        return "Date inconnue";
+
     const now = new Date();
     const diff = Math.floor((now - date) / 1000);
 
@@ -215,7 +219,7 @@ function renderList(dataArray, userLat, userLon) {
 
     const html = dataArray.map(item => `
         <a href="card.php?id=${item.id}" class="Main-list-article-link">
-            <article class="Main-list-article-link-item Item ${getStatusClassItem(item, 1)}">
+            <article class="Main-list-article-link-item Item ${getStatusClassItem(item, currentUserId)}">
                 <img src="${item.image}" class="Item-photo">
                 <div class="Item-content">
                     <div class="Item-content-box">
@@ -229,11 +233,12 @@ function renderList(dataArray, userLat, userLon) {
                     </div>
                     <div class="Item-content-inside">
                         <p class="Item-content-quartier">Quartier : ${item.quartier}</p>
+                        
                         <p class="Item-content-date">${timeAgo(item.created_at)}</p>
                     </div>
                     <div class="Item-content-box">
                         <p class="Item-content-box-km">Distance : ${item.distance !== null && item.distance !== undefined ? formatDistance(item.distance) : "..."}</p>
-                        <p class="Item-content-statut">${getStatusHtml(item, 1)}</p>
+                        <p class="Item-content-statut">${getStatusHtml(item, currentUserId)}</p>
                     </div>
                 </div>
             </article>

@@ -35,7 +35,7 @@ foreach ($pois as $poi) {
         "image" => $poi["file_path"],
         "visibility" => $poi["visibility"],
         "status" => $poi["status"],
-        "created_at" => $poi["created_at"],
+        "created_at" => date('c', strtotime($poi["created_at"])),
         "content" => $poi["content"],
         "user_id" => (int)$poi["user_id"]
     ];

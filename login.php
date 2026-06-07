@@ -36,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute([$user["id"]]);
 }
 
-
 ?>
 
 <?php require_once(__DIR__ . '/header.php'); ?>

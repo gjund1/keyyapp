@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Remplir les villes dans le Panel filter dynamiquement
 function populateCities() {
     const select = document.querySelector("select");
-    const cities = [...new Set(data.map(item => item.city))];
+    const cities = [...new Set(data.map(item => item.city).filter(Boolean))];
     select.innerHTML = `<option value="">Toutes</option>` + cities.map(city => `<option value="${city}">${city}</option>`).join("");
 }
 
@@ -115,8 +115,10 @@ function applyFilters() {
         filtered = filtered.filter(item => item.city === filters.city);
 
     // filtre mes boites
-    if (filters.mesBoites) 
-        filtered = filtered.filter(item => item.user_id === 1);
+    if (filters.mesBoites) {
+        if (filters.mesBoites && currentUserId)
+            filtered = filtered.filter(item => item.user_id == currentUserId);
+    }       
 
     // CALCUL de la distance (si GPS dispo)
     if (window.userLat && window.userLon)

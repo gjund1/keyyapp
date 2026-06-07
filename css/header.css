@@ -66,15 +66,48 @@ a:hover {
 }
 
 .Header-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-
-    border-radius: 50%;
-    background: #ddd;
+    width: 30px;
+    height: 30px;
     font-weight: bold;
+}
+
+/* ========================= */
+/*         LOGO USER         */
+/* ========================= */
+
+.Card-logo {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    background-color: gray;
+    border-radius: 100%;
+    opacity: 0.7;
+}
+
+.user-user {
+    color: #e0f2fe;
+    background: #0284c7;
+}
+
+.user-moderator {
+    color: #ede9fe;
+    background: #7c3aed;
+}
+
+.user-admin {
+    color: #fee2e2;
+    background: #dc2626;
+}
+
+.user-visitor {
+    color: #f3f4f6;
+    background: #6b7280;
+}
+
+.Card-logo-a:hover {
+    transform: scale(1.1);
+    opacity: 1;
 }
 
 /* ========================= */

@@ -12,8 +12,8 @@ let firstLocation = true;
 let accuracyCircle = null;
 
 // Position de la fiche
-const cardLat = 43.3127424;
-const cardLon = 5.4001664;
+// const cardLat = 43.3127424;
+// const cardLon = 5.4001664;
 
 // Marker fiche
 L.marker([cardLat, cardLon]).addTo(map);
