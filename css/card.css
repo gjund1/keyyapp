@@ -183,6 +183,11 @@
         grid-row: 2 / 3;
     }
 
+    .Main-card-content2-adresse{
+    border-bottom: none;
+}
+
+
     .Main-card-content2-coment {
         padding: 20px;
     }
