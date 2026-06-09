@@ -193,7 +193,7 @@
         border-top: none;
         grid-column: 2 / 3;
         grid-row: 2 / 3;
-        width: 80%;
+        width: 70%;
     }
 
     .Main-card-content2-adresse{
@@ -220,7 +220,7 @@
     }
 
     .Main-card-map, .Main-card-photo {
-        width: 500px;
+        width: 600px;
         height: 400px;
         margin: 30px auto;
     }
