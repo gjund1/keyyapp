@@ -27,9 +27,7 @@ if (!$isOwner && !$isPublicValid) {
     http_response_code(403);
     die("Accès interdit");
 }
-?>
 
-<?php
 $statusText = match($poi['status']) {
     'VALIDATED' => 'Validé',
     'PENDING' => 'En attente',
@@ -37,6 +35,7 @@ $statusText = match($poi['status']) {
     'CANCELED' => 'Supprimé',
     default => $poi['status']
 };
+
 ?>
 
 <script>
@@ -51,6 +50,7 @@ $statusText = match($poi['status']) {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/index.js" defer></script>
 <script src="js/map_fiche.js" defer></script>
+<script src="js/card.js" defer></script>
 
 <main class="Main">
     <div class="Main-map Main-card">
@@ -66,12 +66,12 @@ $statusText = match($poi['status']) {
             </div>
             <img class="Main-card-photo" src="<?= htmlspecialchars($poi['file_path']) ?>" alt="boites">
             <div class="Main-card-content1">
-                <p>Latitude : <?= htmlspecialchars($poi['latitude']) ?></p>
-                <p>Longitude : <?= htmlspecialchars($poi['longitude']) ?></p><br>
-                <p>Distance :  1,4 km A FAIRE!</p><br>
-                <p>Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br><br>
-                <p>Affichage : <i><?= ($poi['visibility'] ?? '') === 'PUBLIC' ? 'Public' : 'Privé' ?></i></p>
-                <p>Statut : <span class="Main-card-content1-status-span"><?= $statusText ?></span></p>
+                <p class="Main-card-content1-lat">Latitude : <?= htmlspecialchars($poi['latitude']) ?></p>
+                <p class="Main-card-content1-lon">Longitude : <?= htmlspecialchars($poi['longitude']) ?></p><br>
+                <p class="Main-card-content1-distance">Distance inconnue</p><br>
+                <p class="Main-card-content1-ajoute">Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br><br>
+                <p class="Main-card-content1-vidibility">Affichage : <i><?= ($poi['visibility'] ?? '') === 'PUBLIC' ? 'Public' : 'Privé' ?></i></p>
+                <p class="Main-card-content1-status">Statut : <span class="Main-card-content1-status-span"><?= $statusText ?></span></p>
             </div>
             <div class="Main-card-content2">
                 <div class="Main-card-content2-adresse">
@@ -81,7 +81,9 @@ $statusText = match($poi['status']) {
                     <p class="Main-card-content2-quartier">Quartier : <?= htmlspecialchars($poi['quartier']) ?></p>
                 </div>
                 <div class="Main-card-content2-coment">
+                    <?php if ($poi['content']) : ?>
                     <p>comment : <?= htmlspecialchars($poi['content']) ?></p>
+                    <?php endif; ?>
                 </div>
                 <?php if ($isOwner || isModerator() || isAdmin()) : ?>
                 <div class="Main-card-content2-btn">
