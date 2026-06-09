@@ -57,7 +57,7 @@ $statusText = match($poi['status']) {
         <div class="Main-card-top">
             <a href="liste.php" class="Main-card-top-back"><span
                     class="material-symbols-outlined font-back">arrow_back</span>Liste</a>
-            <p class="Main-card-top-title">Card</p> 
+            <p class="Main-card-top-title">Card <?= htmlspecialchars($poi['id']) ?></p> 
             <p class="Main-card-top-count"></p>
         </div>
         <div class="Main-card-box">
@@ -67,9 +67,11 @@ $statusText = match($poi['status']) {
             <img class="Main-card-photo" src="<?= htmlspecialchars($poi['file_path']) ?>" alt="boites">
             <div class="Main-card-content1">
                 <p class="Main-card-content1-lat">Latitude : <?= htmlspecialchars($poi['latitude']) ?></p>
-                <p class="Main-card-content1-lon">Longitude : <?= htmlspecialchars($poi['longitude']) ?></p><br>
-                <p class="Main-card-content1-distance">Distance inconnue</p><br>
-                <p class="Main-card-content1-ajoute">Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br><br>
+                <p class="Main-card-content1-lon">Longitude : <?= htmlspecialchars($poi['longitude']) ?></p>
+                <a class="Main-card-content1-link" href="https://www.google.com/maps/dir/?api=1&destination=<?= urlencode($poi['latitude'] . ',' . $poi['longitude']) ?>" target="_blank"><i>-> Itineraire</i>  </a>
+                <br><br>
+                <p class="Main-card-content1-distance">Distance inconnue</p>
+                <p class="Main-card-content1-ajoute">Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br>
                 <p class="Main-card-content1-vidibility">Affichage : <i><?= ($poi['visibility'] ?? '') === 'PUBLIC' ? 'Public' : 'Privé' ?></i></p>
                 <p class="Main-card-content1-status">Statut : <span class="Main-card-content1-status-span"><?= $statusText ?></span></p>
             </div>

@@ -81,6 +81,17 @@
 /* DETAIL */
 .Main-card-content1{
     margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.Main-card-content1-link {
+    color: brown;
+}
+
+.Main-card-content1-ajoute {
+    font-style: italic;
 }
 
 .Main-card-content2{
@@ -103,6 +114,7 @@
     padding-bottom: 15px;
     border-bottom: 2px solid #f2f2f2;
 }
+
 
 .Main-card-content1-status-span {
     font-weight: bold;
@@ -172,7 +184,7 @@
     .Main-card-photo {
         width: 400px;
         height: 300px;
-        margin: 0 auto;
+        margin: 15px auto;
 
         grid-column: 1 / 2;
     }
@@ -181,11 +193,13 @@
         border-top: none;
         grid-column: 2 / 3;
         grid-row: 2 / 3;
+        width: 80%;
     }
 
     .Main-card-content2-adresse{
-    border-bottom: none;
-}
+        border-bottom: none;
+        /* display: block; */
+    }
 
 
     .Main-card-content2-coment {
@@ -197,6 +211,29 @@
         justify-content: left;
     }
 
+}
+
+@media (min-width: 1500px) {
+
+    .Main-card-box {
+        font-size: 1.2em;
+    }
+
+    .Main-card-map, .Main-card-photo {
+        width: 500px;
+        height: 400px;
+        margin: 30px auto;
+    }
+
+    .Main-card-content1{
+        margin: 30px;
+    }
+
+    .Main-card-content2{
+        margin: 0 30px 30px 30px;
+        padding-top: 30px;
+    }
+   
 }
 
 @media screen and (max-width: 480px) {
