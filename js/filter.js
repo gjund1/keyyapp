@@ -118,7 +118,7 @@ function applyFilters() {
     if (filters.mesBoites) {
         if (filters.mesBoites && currentUserId)
             filtered = filtered.filter(item => item.user_id == currentUserId);
-    }       
+    }
 
     // CALCUL de la distance (si GPS dispo)
     if (window.userLat && window.userLon)
@@ -143,8 +143,10 @@ function applyFilters() {
         topCount.innerHTML = `&nbsp;(${filtered.length} boîte${filtered.length > 1 ? "s" : ""} trouvée${filtered.length > 1 ? "s" : ""})`;
     
     // PAGE LISTE
-    if (typeof renderList === "function")
+    if (typeof renderList === "function") {
+        displayLimit = 100;
         renderList(filtered, window.userLat, window.userLon);
+    }
 
     // PAGE MAP
     if (typeof renderMap === "function")

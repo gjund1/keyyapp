@@ -1,3 +1,5 @@
+let displayLimit = 100;
+
 // ------------------------------------ //
 //            Position GPS              //
 // ------------------------------------ //
@@ -217,7 +219,8 @@ function timeAgo(date) {
 function renderList(dataArray, userLat, userLon) {
     const list = document.getElementById("list");
 
-    const html = dataArray.map(item => `
+    const visibleItems = dataArray.slice(0, displayLimit);
+    const html = visibleItems.map(item => `
         <a href="card.php?id=${item.id}" class="Main-list-article-link">
             <article class="Main-list-article-link-item Item ${getStatusClassItem(item, currentUserId)}">
                 <img src="${item.image}" class="Item-photo">
@@ -246,4 +249,30 @@ function renderList(dataArray, userLat, userLon) {
     `).join("");
 
     list.innerHTML = html;
+
+    // boutton voir plus +100 >>
+    const oldBtn = document.getElementById('btn-load-more');
+    if (oldBtn)
+        oldBtn.remove();
+
+    if (dataArray.length > displayLimit) {
+        const btn = document.createElement('button');
+        btn.id = 'btn-load-more';
+        btn.className = 'Btn';
+        btn.textContent = `Voir plus (${dataArray.length - visibleItems.length} restants)`;
+        btn.addEventListener('click', () => {
+            displayLimit += 50;
+            renderList(dataArray, userLat, userLon);
+        });
+        let btnContainer = document.getElementById('loadMoreContainer');
+
+        if (!btnContainer) {
+            btnContainer = document.createElement('div');
+            btnContainer.id = 'loadMoreContainer';
+            list.parentNode.appendChild(btnContainer);
+        }
+
+        btnContainer.innerHTML = '';
+        btnContainer.appendChild(btn);
+    }
 };

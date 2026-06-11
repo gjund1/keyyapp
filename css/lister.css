@@ -111,6 +111,19 @@
     /* color: red; */
 }
 
+#btn-load-more {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 30px;
+    cursor: pointer;
+}
+
+#loadMoreContainer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
 /* ===================== */
 /*     Couleur Status    */
 /* ===================== */
