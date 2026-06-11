@@ -29,12 +29,21 @@ if (!$isOwner && !$isPublicValid) {
 }
 
 $statusText = match($poi['status']) {
-    'VALIDATED' => 'Validé',
-    'PENDING' => 'En attente',
-    'REFUSED' => 'Refusé',
-    'CANCELED' => 'Supprimé',
+    'VALIDATED' => 'validé',
+    'PENDING' => 'en attente',
+    'REFUSED' => 'refusé',
+    'CANCELED' => 'supprimé',
     default => $poi['status']
 };
+
+function statusClass($status) {
+    return match ($status) {
+        "VALIDATED" => "status-green",
+        "PENDING" => "status-orange",
+        "REFUSED" => "status-red",
+        default => "badge-brown"
+    };
+}
 
 ?>
 
@@ -70,9 +79,11 @@ $statusText = match($poi['status']) {
                 <p class="Main-card-content1-lon">Longitude : <?= htmlspecialchars($poi['longitude']) ?></p>
                 <p class="Main-card-content1-distance">Distance inconnue</p>
                 <a class="Main-card-content1-link" href="https://www.google.com/maps/dir/?api=1&destination=<?= urlencode($poi['latitude'] . ',' . $poi['longitude']) ?>" target="_blank"><i>-> Itineraire</i>  </a>
-                <br><br>
-                <p class="Main-card-content1-vidibility">Affichage : <i><?= ($poi['visibility'] ?? '') === 'PUBLIC' ? 'Public' : 'Privé' ?></i></p>
-                <p class="Main-card-content1-status">Statut : <span class="Main-card-content1-status-span"><?= $statusText ?></span></p>
+                <?php if ($isOwner) : ?>
+                    <br><br>
+                    <p class="Main-card-content1-vidibility">Affichage : <i><?= (htmlspecialchars($poi['visibility']) ?? '') === 'PUBLIC' ? 'Public' : 'Privé' ?></i> <span class="material-symbols-outlined font-edit">border_color</span></p>
+                    <p class="Main-card-content1-status">Statut : <span class="Main-card-content1-status-span <?= statusClass(htmlspecialchars($poi['status'])) ?>"><?= $statusText ?></span></p>
+                <?php endif; ?>
                 <p class="Main-card-content1-ajoute">Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br>
             </div>
             <div class="Main-card-content2">

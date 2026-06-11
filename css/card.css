@@ -12,6 +12,17 @@
   color: #007bff;
 } */
 
+.font-edit {
+    color: gray;
+    font-size: 0.7em;
+    cursor: pointer;
+}
+
+.font-edit:hover {
+    color: #3b82f6;
+    opacity: 0.8;
+}
+
 /* top */
 .Main-card-top {
     display: flex;
@@ -115,14 +126,6 @@
     border-bottom: 2px solid #f2f2f2;
 }
 
-
-.Main-card-content1-status-span {
-    font-weight: bold;
-    /* color: orangered; */
-    color: green;
-    /* color: red; */
-}
-
 .Main-card-content2-coment{
     margin: 15px;
     display: flex;
@@ -155,6 +158,30 @@
 
 .Btn {
     padding: 12px 32px;
+}
+
+/* ===================== */
+/*     Couleur Status    */
+/* ===================== */
+.Main-card-content1-status-span {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.status-green {
+    color: green;
+}
+
+.status-orange {
+    color:darkorange;
+}
+
+.status-red {
+    color: red;
+}
+
+.status-brown {
+    color:brown;
 }
 
 
@@ -235,7 +262,7 @@
         border-top: none;
         grid-column: 2 / 3;
         grid-row: 2 / 3;
-        width: 70%;
+        width: 85%;
     }
 
     .Main-card-content2-adresse{
