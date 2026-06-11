@@ -158,6 +158,48 @@
 }
 
 
+
+/* =================================== */
+/*          Lightbox Photo             */
+/* =================================== */
+
+.Lightbox {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.Lightbox.active {
+    display: flex;
+}
+
+.Lightbox-img {
+    max-width: 95%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.Lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Main-card-photo {
+    cursor: zoom-in;
+}
+
+
 /* =================================== */
 /*          MediaQuery                 */
 /* =================================== */
@@ -213,7 +255,7 @@
 
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1555px) {
 
     .Main-card-box {
         font-size: 1.2em;

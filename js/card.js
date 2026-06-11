@@ -35,7 +35,39 @@ function printDistance(cardLat, cardLon) {
 
 printDistance(cardLat, cardLon);
 
-console.log("userLat:", userLat);
-console.log("userLon:", userLon);
-console.log("cardLat:", cardLat);
-console.log("cardLon:", cardLon);
+// ==================
+//   LIGHTBOX PHOTO
+// ==================
+
+const image = document.getElementById('poiImage');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const closeBtn = document.getElementById('lightboxClose');
+
+if (image && lightbox && lightboxImg && closeBtn) {
+    function openLightbox() {
+        lightboxImg.src = image.src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    image.addEventListener('click', openLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+
+    // clic sur fond noir
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox)
+            closeLightbox();
+    });
+
+    // touche ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape')
+            closeLightbox();
+    });
+}

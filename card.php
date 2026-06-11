@@ -64,7 +64,7 @@ $statusText = match($poi['status']) {
             <div id="map" class="Main-card-map">
                 
             </div>
-            <img class="Main-card-photo" src="<?= htmlspecialchars($poi['file_path']) ?>" alt="boites">
+            <img id="poiImage" class="Main-card-photo" src="<?= htmlspecialchars($poi['file_path'], ENT_QUOTES, 'UTF-8') ?>" alt="boites">
             <div class="Main-card-content1">
                 <p class="Main-card-content1-lat">Latitude : <?= htmlspecialchars($poi['latitude']) ?></p>
                 <p class="Main-card-content1-lon">Longitude : <?= htmlspecialchars($poi['longitude']) ?></p>
@@ -82,11 +82,11 @@ $statusText = match($poi['status']) {
                     <p class="Main-card-content2-street"><?= htmlspecialchars($poi['address']) ?></p>
                     <p class="Main-card-content2-quartier">Quartier : <?= htmlspecialchars($poi['quartier']) ?></p>
                 </div>
+                <?php if ($poi['content']) : ?>
                 <div class="Main-card-content2-coment">
-                    <?php if ($poi['content']) : ?>
                     <p>comment : <?= htmlspecialchars($poi['content']) ?></p>
-                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
                 <?php if ($isOwner || isModerator() || isAdmin()) : ?>
                 <div class="Main-card-content2-btn">
                     <button class="Main-card-modify Btn">Modifier</button>
@@ -95,6 +95,10 @@ $statusText = match($poi['status']) {
                 <?php endif; ?>
             </div>
         </div>
+    </div>
+    <div id="lightbox" class="Lightbox">
+        <span id="lightboxClose" class="Lightbox-close">&times;</span>
+        <img id="lightboxImg" class="Lightbox-img" src="" alt="">
     </div>
 </main>
 
