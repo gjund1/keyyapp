@@ -33,12 +33,11 @@ let accuracyCircle = L.circle([userLat, userLon], {radius: 5000, color: 'transpa
 // Layer OpenStreetMap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; OpenStreetMap', maxZoom: 19}).addTo(map);
 
-let firstLocation = true;
-window.myUserId = 1;                // utilisateur id = 1 A MIDIFIER;
-
 // ==================================================
 // fonction succes et error de navigator.geolocation
 // ==================================================
+
+let firstLocation = true;
 
 function success(position) {
         userLat = position.coords.latitude;
@@ -99,7 +98,7 @@ function renderMap(dataArray) {
     // Ajoute nouveaux markers
     dataArray.forEach(item => {
 
-        const color = item.user_id === window.myUserId ? "#308aff" : "#c234c7cb";
+        const color = item.user_id === currentUserId ? "#308aff" : "#c234c7cb";
         const marker = L.marker([item.latitude, item.longitude], {icon: createPin(color)}).addTo(map);
         const url = `card.php?id=${item.id}`;
         const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}`;
