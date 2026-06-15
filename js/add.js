@@ -15,7 +15,6 @@ let marker = null;
 let lat = null;
 let lon = null;
 let accuracy = 999;
-let geoData = null;
 
 // ===========
 //  GPS LIVE
@@ -23,30 +22,24 @@ let geoData = null;
 
 navigator.geolocation.watchPosition(
     async pos => {
-
         lat = pos.coords.latitude;
         lon = pos.coords.longitude;
         accuracy = pos.coords.accuracy;
+        gpsInfo.textContent = `GPS : ${Math.round(accuracy)} m`;
 
-        gpsInfo.textContent =
-            `GPS : ${Math.round(accuracy)} m`;
-
-        if (marker) marker.remove();
+        if (marker) 
+            marker.remove();
 
         marker = L.marker([lat, lon]).addTo(map);
         map.setView([lat, lon], 18);
 
-        if (!geoData && (accuracy <= 15)) {
-
-            geoData = await reverseGeocode(lat, lon);
-
+        if (accuracy <= 1555) {
             btnCapture.disabled = false;
-            btnCapture.textContent = "📷 Capturer";
+            btnCapture.textContent = "Capturer";
         }
     },
 
     err => {
-
         console.warn(err);
     },
     {
@@ -59,7 +52,8 @@ navigator.geolocation.watchPosition(
 
 navigator.mediaDevices.getUserMedia({
     video: {
-        facingMode: "environment"
+        // facingMode: "environment"
+        facingMode: "user"
     }
 })
 .then(stream => {
@@ -82,20 +76,19 @@ btnCapture.addEventListener("click", async () => {
 
     canvas.toBlob(async blob => {
 
-        const file = await compressImage(blob);
+    if (!blob) {
+        console.error("Blob vide !");
+        return;
+    }
 
-        const formData = new FormData();
+    const file = await compressImage(blob);
 
-        formData.append("photo", file);
-        formData.append("lat", lat);
-        formData.append("lon", lon);
+    console.log("FILE:", file);
 
-        formData.append("address", geoData.address);
-        formData.append("city", geoData.city);
-        formData.append("quartier", geoData.quartier);
-        formData.append("cp", geoData.cp);
-        formData.append("region", geoData.region);
-        formData.append("pays", geoData.pays);
+    const formData = new FormData();
+    formData.append("photo", file);
+    formData.append("lat", lat);
+    formData.append("lon", lon);
 
         const res = await fetch("add_upload.php", {
             method: "POST",
@@ -103,7 +96,6 @@ btnCapture.addEventListener("click", async () => {
         });
 
         const data = await res.json();
-
         if (data.success) {
             window.location = "add_confirm.php";
         }
@@ -114,23 +106,17 @@ btnCapture.addEventListener("click", async () => {
 // COMPRESSION IMAGE (<2 Mo)
 
 async function compressImage(blob) {
-
     return new Promise(resolve => {
-
         const img = new Image();
 
         img.onload = () => {
-
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-
             const maxW = 1280;
-
             const scale = maxW / img.width;
 
             canvas.width = maxW;
             canvas.height = img.height * scale;
-
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
             canvas.toBlob(
@@ -147,5 +133,3 @@ async function compressImage(blob) {
         img.src = URL.createObjectURL(blob);
     });
 }
-
-// REVERSE GEOCODING (simple)

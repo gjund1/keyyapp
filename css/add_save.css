@@ -1,0 +1,32 @@
+/* =========================== */
+/*         CSS confirme        */
+/* =========================== */
+
+.AddConfirm {
+    max-width: 700px;
+    margin: auto;
+    padding: 15px;
+}
+
+.AddConfirm-photo {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.AddConfirm-map {
+    height: 300px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+}
+
+.Btn {
+    width: 100%;
+    margin-top: 15px;
+}

@@ -12,11 +12,12 @@
     <div class="Add">            
         <div class="Add-camera">
             <video id="video" class = "Add-camera-video" autoplay playsinline></video>
+            <canvas id="canvas" style="display: none;"></canvas>
             <div class="Add-map">
                 <div id="map" class="Add-map-box"></div>
             </div>
             <div class="Add-camera-top">
-                <a href="liste.php" class="Main-card-top-back"><span class="material-symbols-outlined font-back">arrow_back</span>retour</a>
+                <a href="index.php" class="Main-card-top-back"><span class="material-symbols-outlined font-back">arrow_back</span>retour</a>
                 <p id="gpsInfo" class="Add-camera-gps">GPS...</p>
             </div>
             <button id="btnCapture"  class = "Add-camera-btn Btn" disabled>GPS en cours...</button>
