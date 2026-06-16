@@ -47,10 +47,17 @@
     width: 100%;
     height: 100%;
     border-radius: 8px;
-    box-shadow: 0 0 12px 5px rgba(0, 128, 0, 0.7);
-    box-shadow: 0 0 12px 5px rgba(255, 166, 0, 0.7);
-    box-shadow: 0 0 12px 5px rgba(255, 0, 0, 0.7);
     box-shadow: 0 0 12px 5px rgba(128, 128, 128, 0.7);
+}
+
+.Add-map-box-green {
+    box-shadow: 0 0 12px 5px rgba(0, 128, 0, 0.7);
+}
+.Add-map-box-orange {
+    box-shadow: 0 0 12px 5px rgba(255, 166, 0, 0.7);
+}
+.Add-map-box-red {
+    box-shadow: 0 0 12px 5px rgba(255, 0, 0, 0.7);
 }
 
 .Add-camera-gps {

@@ -6,6 +6,7 @@ const gpsInfo = document.getElementById("gpsInfo");
 const video = document.getElementById("video");
 const btnCapture = document.getElementById("btnCapture");
 const canvas = document.getElementById("canvas");
+const mapBox = document.getElementById("map");
 
 const map = L.map("map").setView([43.2965, 5.3698], 15);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
@@ -16,6 +17,27 @@ let lat = null;
 let lon = null;
 let accuracy = 999;
 
+function gpsAccuracy() {
+    if (accuracy < 11) {
+        btnCapture.disabled = false;
+        btnCapture.textContent = "Capturer";
+        gpsInfo.textContent = `GPS ✅ ${Math.round(accuracy)} m`;
+        mapBox.classList.add("Add-map-box-green");
+
+    } else if (accuracy < 21) {
+        btnCapture.disabled = false;
+        btnCapture.textContent = "Capturer";
+        gpsInfo.textContent = `GPS ⚠️ ${Math.round(accuracy)} m`;
+
+        mapBox.classList.add("Add-map-box-orange");
+    } else {
+        btnCapture.disabled = false;
+        btnCapture.textContent = "Capturer";
+        gpsInfo.textContent = `GPS ❌ ${Math.round(accuracy)} m`;
+        mapBox.classList.add("Add-map-box-red");
+    }
+}
+
 // ===========
 //  GPS LIVE
 // ===========
@@ -25,18 +47,21 @@ navigator.geolocation.watchPosition(
         lat = pos.coords.latitude;
         lon = pos.coords.longitude;
         accuracy = pos.coords.accuracy;
-        gpsInfo.textContent = `GPS : ${Math.round(accuracy)} m`;
-
+        // gpsInfo.textContent = `GPS : ${Math.round(accuracy)} m`;
+        
         if (marker) 
             marker.remove();
 
         marker = L.marker([lat, lon]).addTo(map);
         map.setView([lat, lon], 18);
+        L.circle([lat, lon], {radius: accuracy});
+        
+        gpsAccuracy();
 
-        if (accuracy <= 1555) {
-            btnCapture.disabled = false;
-            btnCapture.textContent = "Capturer";
-        }
+        // if (accuracy <= 1555) {
+        //     btnCapture.disabled = false;
+        //     btnCapture.textContent = "Capturer";
+        // }
     },
 
     err => {

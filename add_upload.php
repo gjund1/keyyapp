@@ -41,12 +41,12 @@ $_SESSION['new_poi'] = [
     'photo' => $filename,
     'lat' => $lat,
     'lon' => $lon,
-    'adress' => $addressParts['road'],
+    'address' => $addressParts['road'],
     'quartier' => $addressParts['quarter'],
     'city' => $addressParts['city'],
     'cp' => $addressParts['postcode'],
-    'region' => $addressParts['country'],
-    'pays' => $addressParts['country_code']
+    'region' => $addressParts['county'],
+    'pays' => strtoupper($addressParts['country_code']) 
 ];
 
 echo json_encode([
