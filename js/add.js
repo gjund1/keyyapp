@@ -18,21 +18,17 @@ let lon = null;
 let accuracy = 999;
 
 function gpsAccuracy() {
-    if (accuracy < 11) {
+    if (accuracy < 110000) {                                            // 11
         btnCapture.disabled = false;
         btnCapture.textContent = "Capturer";
         gpsInfo.textContent = `GPS ✅ ${Math.round(accuracy)} m`;
         mapBox.classList.add("Add-map-box-green");
+        btnCapture.style.cursor = 'pointer';
 
     } else if (accuracy < 21) {
-        btnCapture.disabled = false;
-        btnCapture.textContent = "Capturer";
         gpsInfo.textContent = `GPS ⚠️ ${Math.round(accuracy)} m`;
-
         mapBox.classList.add("Add-map-box-orange");
     } else {
-        btnCapture.disabled = false;
-        btnCapture.textContent = "Capturer";
         gpsInfo.textContent = `GPS ❌ ${Math.round(accuracy)} m`;
         mapBox.classList.add("Add-map-box-red");
     }
@@ -47,7 +43,6 @@ navigator.geolocation.watchPosition(
         lat = pos.coords.latitude;
         lon = pos.coords.longitude;
         accuracy = pos.coords.accuracy;
-        // gpsInfo.textContent = `GPS : ${Math.round(accuracy)} m`;
         
         if (marker) 
             marker.remove();
@@ -55,13 +50,7 @@ navigator.geolocation.watchPosition(
         marker = L.marker([lat, lon]).addTo(map);
         map.setView([lat, lon], 18);
         L.circle([lat, lon], {radius: accuracy});
-        
         gpsAccuracy();
-
-        // if (accuracy <= 1555) {
-        //     btnCapture.disabled = false;
-        //     btnCapture.textContent = "Capturer";
-        // }
     },
 
     err => {

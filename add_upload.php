@@ -9,7 +9,7 @@ $lon = $_POST['lon'] ?? null;
 if (!isset($_FILES['photo']))
     die(json_encode(['error' => 'no file']));
 
-$filename = 'img/' . uniqid() . '.jpg';
+$filename = 'img/ka_' . uniqid() . '.jpg';
 move_uploaded_file($_FILES['photo']['tmp_name'], __DIR__ . '/' . $filename);
 
 /* =========================
