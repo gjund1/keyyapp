@@ -1,10 +1,6 @@
-<?php require_once(__DIR__ . '/config.php'); ?>
-
-<?php
-if (!isset($_SESSION['new_poi'])) {
-    header('Location: add.php');
-    exit;
-}
+<?php 
+require_once(__DIR__ . '/config.php');
+requireLogin();
 $poi = $_SESSION['new_poi'];
 ?>
 
@@ -48,16 +44,22 @@ $poi = $_SESSION['new_poi'];
                 <p class="Main-card-content2-street"><?= htmlspecialchars($poi['address']) ?></p>
                 <p class="Main-card-content2-quartier">Quartier : <?= htmlspecialchars($poi['quartier']) ?></p>
                 <br><br>
-                <p class="Main-card-content1-vidibility">Affichage : <i>Public</i> <span class="material-symbols-outlined font-edit">border_color</span></p>
+                <p>
+                    <label class="Main-card-content1-vidibility" for="vidibility">Affichage : </label>
+                    <select name="visibility" id="visibility" form="saveForm">
+                        <option value="PUBLIC" selected>Public</option>
+                        <option value="PRIVATE">Privé</option>
+                    </select>
+                </p>
             </div>
             <div class="Main-card-content2">
                 <!-- <div class="Main-card-content2-adresse">
                 </div> -->
                 <div class="Main-card-content2-coment">
-                    <p>Ajouter un commentaire ? <span class="material-symbols-outlined font-edit">border_color</span></p>
+                    <textarea name="content" placeholder="Ajouter un commentaire (optionnel) ?" maxlength="500" form="saveForm"></textarea>
                 </div>
                 <div class="Main-card-content2-btn">
-                    <form action="add_save.php" method="POST">
+                    <form id="saveForm" action="add_save.php" method="POST">
                         <button type="submit" class="Btn">Enregistrer</button>
                     </form>
                 </div>

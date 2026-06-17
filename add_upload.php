@@ -9,8 +9,19 @@ $lon = $_POST['lon'] ?? null;
 if (!isset($_FILES['photo']))
     die(json_encode(['error' => 'no file']));
 
-$filename = 'img/ka_' . uniqid() . '.jpg';
-move_uploaded_file($_FILES['photo']['tmp_name'], __DIR__ . '/' . $filename);
+$tmpDir = __DIR__ . '/img/tmp/';
+if (!is_dir($tmpDir))
+    mkdir($tmpDir, 0777, true);
+
+$filename = 'tmp_' . uniqid() . '.webp';
+$fullPath = $tmpDir . $filename;
+move_uploaded_file($_FILES['photo']['tmp_name'], $fullPath);
+
+// photos abandonnées sont supprimées après 24h.
+foreach (glob(__DIR__ . '/img/tmp/*') as $file) {
+    if (time() - filemtime($file) > 86400)
+        unlink($file);
+}
 
 /* =========================
    2. REVERSE GEOCODING (OSM)
@@ -38,7 +49,7 @@ $addressParts = $geo['address'] ?? [];
 ========================= */
 
 $_SESSION['new_poi'] = [
-    'photo' => $filename,
+    'photo' => 'img/tmp/' . $filename,
     'lat' => $lat,
     'lon' => $lon,
     'address' => $addressParts['road'],

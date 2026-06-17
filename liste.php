@@ -13,6 +13,7 @@
 <script src="js/list.js" defer></script>
 
 <main class="Main">
+        <?php require_once(__DIR__ . '/popin.php'); ?>
         <?php require_once(__DIR__ . '/lister.php'); ?>
         <?php require_once(__DIR__ . '/filter.php'); ?>
     </div>

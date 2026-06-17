@@ -15,6 +15,7 @@ let marker = null;
 
 let lat = null;
 let lon = null;
+// let accuracyCircle = null;
 let accuracy = 999;
 
 function gpsAccuracy() {
@@ -46,6 +47,11 @@ navigator.geolocation.watchPosition(
         
         if (marker) 
             marker.remove();
+
+        if (accuracyCircle)
+            accuracyCircle.remove();
+
+        // accuracyCircle = L.circle([lat, lon], { radius: accuracy }).addTo(map);
 
         marker = L.marker([lat, lon]).addTo(map);
         map.setView([lat, lon], 18);
@@ -84,10 +90,8 @@ btnCapture.addEventListener("click", async () => {
 
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-
     const ctx = canvas.getContext("2d");
     ctx.drawImage(video, 0, 0);
-
     canvas.toBlob(async blob => {
 
     if (!blob) {
@@ -96,9 +100,7 @@ btnCapture.addEventListener("click", async () => {
     }
 
     const file = await compressImage(blob);
-
-    console.log("FILE:", file);
-
+    // console.log("FILE:", file);
     const formData = new FormData();
     formData.append("photo", file);
     formData.append("lat", lat);
@@ -126,22 +128,14 @@ async function compressImage(blob) {
         img.onload = () => {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-            const maxW = 1280;
+            const maxW = 800;
             const scale = maxW / img.width;
 
             canvas.width = maxW;
             canvas.height = img.height * scale;
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-            canvas.toBlob(
-                b => resolve(
-                    new File([b], "photo.jpg", {
-                        type: "image/jpeg"
-                    })
-                ),
-                "image/jpeg",
-                0.8
-            );
+            canvas.toBlob(b => resolve(new File([b], "photo.webp", {type: "image/webp"})), "image/webp", 0.8);
         };
 
         img.src = URL.createObjectURL(blob);

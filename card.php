@@ -111,6 +111,19 @@ function statusClass($status) {
         <span id="lightboxClose" class="Lightbox-close">&times;</span>
         <img id="lightboxImg" class="Lightbox-img" src="" alt="">
     </div>
+    <div id="deleteModal" class="Modal">
+        <div class="Modal-content">
+            <h3>Supprimer la boîte ?</h3>
+            <p>Cette action est irréversible !</p>
+            <div class="Modal-buttons">
+                <button id="btnCancelDelete" class="Btn">Annuler</button>
+                <form action="delete_poi.php" method="POST">
+                    <input type="hidden" name="poi_id" value="<?= $item['id'] ?>">
+                    <button type="submit" class="Btn Btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 <?php require_once(__DIR__ . '/footer.php'); ?>

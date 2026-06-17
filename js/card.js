@@ -71,3 +71,24 @@ if (image && lightbox && lightboxImg && closeBtn) {
             closeLightbox();
     });
 }
+
+/* =================================== */
+/*              Popin                  */
+/* =================================== */
+
+const btnDelete = document.querySelector(".Main-card-btn-del");
+const deleteModal = document.getElementById("deleteModal");
+const btnCancelDelete = document.getElementById("btnCancelDelete");
+
+btnDelete.addEventListener("click", () => {
+    deleteModal.classList.add("active");
+});
+
+btnCancelDelete.addEventListener("click", () => {
+    deleteModal.classList.remove("active");
+});
+
+deleteModal.addEventListener("click", e => {
+    if (e.target === deleteModal)
+        deleteModal.classList.remove("active");
+});
