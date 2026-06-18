@@ -15,7 +15,7 @@ let marker = null;
 
 let lat = null;
 let lon = null;
-// let accuracyCircle = null;
+let accuracyCircle = null;
 let accuracy = 999;
 
 function gpsAccuracy() {
@@ -51,7 +51,7 @@ navigator.geolocation.watchPosition(
         if (accuracyCircle)
             accuracyCircle.remove();
 
-        // accuracyCircle = L.circle([lat, lon], { radius: accuracy }).addTo(map);
+        accuracyCircle = L.circle([lat, lon], { radius: accuracy }).addTo(map);
 
         marker = L.marker([lat, lon]).addTo(map);
         map.setView([lat, lon], 18);

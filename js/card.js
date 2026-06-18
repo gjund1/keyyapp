@@ -80,15 +80,61 @@ const btnDelete = document.querySelector(".Main-card-btn-del");
 const deleteModal = document.getElementById("deleteModal");
 const btnCancelDelete = document.getElementById("btnCancelDelete");
 
-btnDelete.addEventListener("click", () => {
-    deleteModal.classList.add("active");
-});
+if (btnDelete) {
+    btnDelete.addEventListener("click", () => {
+        deleteModal.classList.add("active");
+    });
+}
 
-btnCancelDelete.addEventListener("click", () => {
-    deleteModal.classList.remove("active");
-});
-
-deleteModal.addEventListener("click", e => {
-    if (e.target === deleteModal)
+if (btnCancelDelete) {
+    btnCancelDelete.addEventListener("click", () => {
         deleteModal.classList.remove("active");
+    });
+}
+
+if (deleteModal) {
+    deleteModal.addEventListener("click", e => {
+        if (e.target === deleteModal)
+            deleteModal.classList.remove("active");
+    });
+}
+
+// Fonction pour afficher un message temporaire
+function showTemporaryMessage(text, duration = 3000) {
+    message.textContent = text;
+    message.classList.remove("hidden");
+    setTimeout(() => {message.classList.add("hidden");}, duration);
+}
+
+// =============================
+//  MODIF Visibility et comment
+// =============================
+
+const visibilityBox = document.getElementById("visibilityBox");
+const visibilitySelect = document.getElementById("visibility");
+const message = document.querySelector(".message");
+
+visibilitySelect.addEventListener("change", async () => {
+    const value = visibilitySelect.value;
+    const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "visibility", value})});
+    const data = await res.json();
+
+    if (data.success) {
+        showTemporaryMessage("Les modifications ont bien été prises en compte !");
+    }
+});
+
+/* =======================
+   COMMENT EDIT
+======================= */
+const contentTextarea = document.querySelector('textarea[name="content"]');
+
+contentTextarea.addEventListener("blur", async () => {
+    const value = contentTextarea.value;
+    const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "content", value})});
+    const data = await res.json();
+
+    if (data.success) {
+        showTemporaryMessage("Les modifications ont bien été prises en compte !");
+    }
 });

@@ -1,6 +1,6 @@
 <?php require_once(__DIR__ . '/config.php'); ?>
-<script>const currentUserId = <?= $_SESSION['id'] ?? 'null' ?>;</script>
 <?php require_once(__DIR__ . '/header.php'); ?>
+<script>const currentUserId = <?= $_SESSION['id'] ?? 'null' ?>;</script>
 
 <?php 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -9,7 +9,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $fiche_id = (int)$_GET['id'];
 
-$stmt = $pdo->prepare("SELECT pois.*, photos.file_path FROM pois LEFT JOIN photos ON photos.poi_id = pois.id WHERE pois.id = ? LIMIT 1");
+$stmt = $pdo->prepare("SELECT pois.*, photos.file_path FROM pois LEFT JOIN photos ON photos.poi_id = pois.id WHERE pois.id = ? AND pois.status != 'CANCELED' LIMIT 1");
 $stmt->execute([$fiche_id]);
 $poi = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -19,13 +19,11 @@ if (!$poi) {
 }
 
 $isOwner = isset($_SESSION['id']) && $_SESSION['id'] == $poi['user_id'];
-$isPublicValid =
-    $poi['status'] === 'VALIDATED' &&
-    $poi['visibility'] === 'PUBLIC';
+$isPublicValid = $poi['status'] === 'VALIDATED' && $poi['visibility'] === 'PUBLIC';
 
 if (!$isOwner && !$isPublicValid) {
-    http_response_code(403);
-    die("Accès interdit");
+    header('Location: liste.php');
+    exit;
 }
 
 $statusText = match($poi['status']) {
@@ -41,7 +39,7 @@ function statusClass($status) {
         "VALIDATED" => "status-green",
         "PENDING" => "status-orange",
         "REFUSED" => "status-red",
-        default => "badge-brown"
+        default => "status-brown"
     };
 }
 
@@ -50,6 +48,7 @@ function statusClass($status) {
 <script>
     const cardLat = <?= (float)$poi['latitude'] ?>;
     const cardLon = <?= (float)$poi['longitude'] ?>;
+    const poiId = <?= (int)$poi['id'] ?>;
 </script>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -80,8 +79,14 @@ function statusClass($status) {
                 <p class="Main-card-content1-distance">Distance inconnue</p>
                 <a class="Main-card-content1-link" href="https://www.google.com/maps/dir/?api=1&destination=<?= htmlspecialchars(urlencode($poi['latitude'] . ',' . $poi['longitude'])) ?>" target="_blank"><i>-> Itineraire</i>  </a>
                 <?php if ($isOwner) : ?>
-                    <br><br>
-                    <p class="Main-card-content1-vidibility">Affichage : <i><?= (htmlspecialchars($poi['visibility']) ?? '') === 'PUBLIC' ? 'Public' : 'Privé' ?></i> <span class="material-symbols-outlined font-edit">border_color</span></p>
+                    <br><br>                                     
+                    <p>
+                        <label class="Main-card-content1-vidibility" for="vidibility">Affichage : </label>
+                        <select name="visibility" id="visibility">
+                            <option value="PUBLIC" <?= ($poi['visibility'] ?? '') === 'PUBLIC' ? 'selected' : '' ?>>Public</option>
+                            <option value="PRIVATE" <?= ($poi['visibility'] ?? '') === 'PRIVATE' ? 'selected' : '' ?>>Privé</option>
+                        </select>
+                    </p>
                     <p class="Main-card-content1-status">Statut : <span class="Main-card-content1-status-span <?= statusClass(htmlspecialchars($poi['status'])) ?>"><?= htmlspecialchars($statusText) ?></span></p>
                 <?php endif; ?>
                 <p class="Main-card-content1-ajoute">Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br>
@@ -93,17 +98,22 @@ function statusClass($status) {
                     <p class="Main-card-content2-street"><?= htmlspecialchars($poi['address']) ?></p>
                     <p class="Main-card-content2-quartier">Quartier : <?= htmlspecialchars($poi['quartier']) ?></p>
                 </div>
+
                 <?php if ($poi['content']) : ?>
-                <div class="Main-card-content2-coment">
-                    <p>comment : <?= htmlspecialchars($poi['content']) ?></p>
-                </div>
+                    <div class="Main-card-content2-coment">
+                        <textarea name="content" placeholder="<?= empty(htmlspecialchars($poi['content'] ?? '')) ? 'Ajouter un commentaire (optionnel) ?' : '' ?>" maxlength="500"><?= htmlspecialchars($poi['content'] ?? '') ?></textarea>
+                    </div>
                 <?php endif; ?>
+
+                <p class="message"></p>
+                    
                 <?php if ($isOwner || isModerator() || isAdmin()) : ?>
-                <div class="Main-card-content2-btn">
-                    <button class="Main-card-modify Btn">Modifier</button>
-                    <button class="Main-card-btn-del Btn">Supprimer</button>
-                </div>
+                    <div class="Main-card-content2-btn">
+                        <button class="Main-card-modify Btn">Modifier</button>
+                        <button class="Main-card-btn-del Btn">Supprimer</button>
+                    </div>
                 <?php endif; ?>
+
             </div>
         </div>
     </div>
@@ -118,7 +128,7 @@ function statusClass($status) {
             <div class="Modal-buttons">
                 <button id="btnCancelDelete" class="Btn">Annuler</button>
                 <form action="delete_poi.php" method="POST">
-                    <input type="hidden" name="poi_id" value="<?= $item['id'] ?>">
+                    <input type="hidden" name="poi_id" value="<?= htmlspecialchars($poi['id']) ?>">
                     <button type="submit" class="Btn Btn-danger">Supprimer</button>
                 </form>
             </div>
