@@ -116,6 +116,24 @@
     font-size: 1em;
 }
 
+/* ======================= */
+/* */
+#usernameInput {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    width: 100px;
+}
+
+#saveUsernameBtn {
+    margin-left: 1px;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
 /* ================ */
 /*    Badge User    */
 /* ================ */

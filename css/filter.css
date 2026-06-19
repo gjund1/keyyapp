@@ -76,3 +76,8 @@ option {
     color: #007bff;
     text-shadow: -2px 0 5px rgba(0,0,0,0.2);
 }
+
+.pending {
+    color: orangered;
+    font-style: italic;
+}

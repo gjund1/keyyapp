@@ -15,15 +15,18 @@ function getDistanceGPS(lat1, lon1, lat2, lon2) {
 }
 
 function formatDistance(distanceKm) {
-    if (distanceKm < 1) return Math.round(distanceKm * 1000) + " m";
-    if (distanceKm < 10) return distanceKm.toFixed(1) + " km";
+    if (distanceKm < 1) 
+        return Math.round(distanceKm * 1000) + " m";
+    if (distanceKm < 10) 
+        return distanceKm.toFixed(1) + " km";
     return Math.round(distanceKm) + " km";
 }
 
 function printDistance(cardLat, cardLon) {
     const el = document.querySelector('.Main-card-content1-distance');
 
-    if (!el) return;
+    if (!el) 
+        return;
     if (!userCLat || !userCLon || !cardLat || !cardLon) {
         el.textContent = "Distance : inconnue";
         return;
@@ -114,27 +117,29 @@ const visibilityBox = document.getElementById("visibilityBox");
 const visibilitySelect = document.getElementById("visibility");
 const message = document.querySelector(".message");
 
-visibilitySelect.addEventListener("change", async () => {
-    const value = visibilitySelect.value;
-    const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "visibility", value})});
-    const data = await res.json();
+if (visibilitySelect) {
+    visibilitySelect.addEventListener("change", async () => {
+        const value = visibilitySelect.value;
+        const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "visibility", value})});
+        const data = await res.json();
+    
+        if (data.success)
+            showTemporaryMessage("Les modifications ont bien été prises en compte !");
+    });
+}
 
-    if (data.success) {
-        showTemporaryMessage("Les modifications ont bien été prises en compte !");
-    }
-});
-
-/* =======================
-   COMMENT EDIT
-======================= */
+// =======================
+//    COMMENT EDIT
+// =======================
 const contentTextarea = document.querySelector('textarea[name="content"]');
 
-contentTextarea.addEventListener("blur", async () => {
-    const value = contentTextarea.value;
-    const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "content", value})});
-    const data = await res.json();
-
-    if (data.success) {
-        showTemporaryMessage("Les modifications ont bien été prises en compte !");
-    }
-});
+if (contentTextarea) {
+    contentTextarea.addEventListener("blur", async () => {
+        const value = contentTextarea.value;
+        const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "content", value})});
+        const data = await res.json();
+    
+        if (data.success)
+            showTemporaryMessage("Les modifications ont bien été prises en compte !");
+    });
+}

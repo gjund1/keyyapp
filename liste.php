@@ -5,6 +5,9 @@
 <!-- CONST PHP ->  CONST JS -->
 <script>const currentUserId = <?= $_SESSION['id'] ?? 'null' ?>;</script>
 <script>const data = <?= json_encode($data, JSON_UNESCAPED_UNICODE) ?>;</script>
+<script>const isAdmin = <?= isAdmin() ? 'true' : 'false' ?>;</script>
+<script>const isModerator = <?= isModerator() ? 'true' : 'false' ?>;</script>
+
 
 <link rel="stylesheet" href="css/index.css">
 <script src="js/index.js" defer></script>

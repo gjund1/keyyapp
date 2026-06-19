@@ -168,7 +168,7 @@ function getStatusTexte(status) {
 // Affiche le Status uniquement pour mes boites
 function getStatusHtml(item, user_id) {
     let statusHtml = "";
-    if (item.user_id === user_id) 
+    if ((item.user_id === user_id) || isAdmin || isModerator) 
         statusHtml = `statut : <span class="Item-content-statut-span ${getStatusClass(item.status)}">${getStatusTexte(item.status)}</span>`;
     return statusHtml;
 };

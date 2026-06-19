@@ -21,5 +21,9 @@
         </select>
         <br><br>
         <input type="checkbox" name="mesboites"> Mes boites
+        <br>
+        <?php if (isModerator() || isAdmin()) : ?>
+            <input type="checkbox" name="pending"> <span class="pending">En attente</span>
+        <?php endif; ?>
     </div>
 </aside>

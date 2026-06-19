@@ -24,14 +24,21 @@ document.addEventListener("click", () => {
 const filters = {
     sort: "date",
     city: null,
-    mesBoites: false
+    mesBoites: false,
+    pending:false
 };
 
 // PRIORITÉ AUX PARAMÈTRES URL
 function loadFiltersFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("mesboites") === "1")
+    if (params.get("pending") === "1") {
+        filters.pending = true;
+        filters.mesBoites = false;
+    }
+    if (params.get("mesboites") === "1") {
         filters.mesBoites = true;
+        filters.pending = false;
+    }
     if (params.get("tri"))
         filters.sort = params.get("tri");
     if (params.has("city"))
@@ -67,12 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (checkbox)
         checkbox.checked = filters.mesBoites;
 
+    // PENDING  
+    const checkPending = document.querySelector('input[name="pending"]');
+    if (checkPending)
+        checkPending.checked = filters.pending;
+
     // EVENTS
     // TRI
     document.querySelectorAll('input[name="tri"]').forEach(input => {
         input.addEventListener("change", (e) => {
             filters.sort = e.target.value;
-            localStorage.setItem("filters", JSON.stringify(filters));
+            saveFilters()
             applyFilters();
         });
     });
@@ -81,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (citySelect) {
         citySelect.addEventListener("change", (e) => {
             filters.city = e.target.value;
-            localStorage.setItem("filters", JSON.stringify(filters));
+            saveFilters()
             applyFilters();
         });
     }
@@ -90,7 +102,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (checkbox) {
         checkbox.addEventListener("change", (e) => {
             filters.mesBoites = e.target.checked;
-            localStorage.setItem("filters", JSON.stringify(filters));
+            saveFilters()
+            applyFilters();
+        });
+    }
+
+    // PENDING
+    if (checkPending) {
+        checkPending.addEventListener("change", (e) => {
+            filters.pending = e.target.checked;
+            saveFilters()
             applyFilters();
         });
     }
@@ -119,6 +140,10 @@ function applyFilters() {
         if (filters.mesBoites && currentUserId)
             filtered = filtered.filter(item => item.user_id == currentUserId);
     }
+
+    // filtre pending
+    if (filters.pending)
+        filtered = filtered.filter(item => item.status === "PENDING");
 
     // CALCUL de la distance (si GPS dispo)
     if (window.userLat && window.userLon)

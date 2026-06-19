@@ -3,8 +3,8 @@ require_once(__DIR__ . '/config.php');
 requireLogin();
 
 $poiId = (int)($_POST['poi_id'] ?? 0);
-$field = $_POST['field'] ?? null;
-$value = $_POST['value'] ?? null;
+$field = trim($_POST['field'] ?? null);
+$value = trim($_POST['value'] ?? '');
 
 if (!$poiId || !$field) {
     echo json_encode(['success' => false]);
@@ -20,10 +20,20 @@ if (!in_array($field, $allowed)) {
 }
 
 /* check ownership */
-$stmt = $pdo->prepare("SELECT id FROM pois WHERE id = ? AND user_id = ?");
-$stmt->execute([$poiId, $_SESSION['id']]);
+$isOwner = false;
+$stmt = $pdo->prepare("SELECT user_id FROM pois WHERE id = ?");
+$stmt->execute([$poiId]);
+$poi = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$stmt->fetch()) {
+if (!$poi) {
+    echo json_encode(['success' => false, 'error' => 'not found']);
+    exit;
+}
+
+if (isset($_SESSION['id']) && $_SESSION['id'] == $poi['user_id'])
+    $isOwner = true;
+
+if (!$isOwner && !isAdmin() && !isModerator()) {
     echo json_encode(['success' => false, 'error' => 'not allowed']);
     exit;
 }

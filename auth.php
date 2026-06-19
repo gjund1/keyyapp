@@ -15,10 +15,12 @@ function isAdmin(): bool {
     return getRole() === 'ADMIN';
 }
 
+// Réservé aux modérateurs
 function isModerator(): bool {
     return in_array(getRole(), ['ADMIN', 'MODERATEUR']);
 }
 
+// Utisisateur logé
 function requireLogin(): void {
     if (!isLogged()) {
         header('Location: login.php');

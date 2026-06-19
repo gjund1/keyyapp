@@ -21,7 +21,7 @@ if (!$poi) {
 $isOwner = isset($_SESSION['id']) && $_SESSION['id'] == $poi['user_id'];
 $isPublicValid = $poi['status'] === 'VALIDATED' && $poi['visibility'] === 'PUBLIC';
 
-if (!$isOwner && !$isPublicValid) {
+if (!$isOwner && !$isPublicValid && !isModerator() && !isAdmin()) {
     header('Location: liste.php');
     exit;
 }
@@ -78,7 +78,7 @@ function statusClass($status) {
                 <p class="Main-card-content1-lon">Longitude : <?= htmlspecialchars($poi['longitude']) ?></p>
                 <p class="Main-card-content1-distance">Distance inconnue</p>
                 <a class="Main-card-content1-link" href="https://www.google.com/maps/dir/?api=1&destination=<?= htmlspecialchars(urlencode($poi['latitude'] . ',' . $poi['longitude'])) ?>" target="_blank"><i>-> Itineraire</i>  </a>
-                <?php if ($isOwner) : ?>
+                <?php if ($isOwner || isModerator() || isAdmin()) : ?>
                     <br><br>                                     
                     <p>
                         <label class="Main-card-content1-vidibility" for="vidibility">Affichage : </label>
@@ -99,7 +99,7 @@ function statusClass($status) {
                     <p class="Main-card-content2-quartier">Quartier : <?= htmlspecialchars($poi['quartier']) ?></p>
                 </div>
 
-                <?php if ($poi['content']) : ?>
+                <?php if ($poi['content'] || isModerator()) : ?>
                     <div class="Main-card-content2-coment">
                         <textarea name="content" placeholder="<?= empty(htmlspecialchars($poi['content'] ?? '')) ? 'Ajouter un commentaire (optionnel) ?' : '' ?>" maxlength="500"><?= htmlspecialchars($poi['content'] ?? '') ?></textarea>
                     </div>
@@ -109,7 +109,7 @@ function statusClass($status) {
                     
                 <?php if ($isOwner || isModerator() || isAdmin()) : ?>
                     <div class="Main-card-content2-btn">
-                        <button class="Main-card-modify Btn">Modifier</button>
+                        <!-- <button class="Main-card-modify Btn">Modifier</button> -->
                         <button class="Main-card-btn-del Btn">Supprimer</button>
                     </div>
                 <?php endif; ?>
