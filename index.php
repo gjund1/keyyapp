@@ -1,19 +1,34 @@
-<?php require_once(__DIR__ . '/config.php'); ?>
-<?php require_once(__DIR__ . '/data.php'); ?>
-<?php require_once(__DIR__ . '/header.php'); ?>
+<?php
+require_once __DIR__ . '/app/controleurs/config.php';
 
-<!-- CONST PHP ->  CONST JS -->
-<script>const currentUserId = <?= $_SESSION['id'] ?? 'null' ?>;</script>
-<script>const data = <?= json_encode($data, JSON_UNESCAPED_UNICODE) ?>;</script>
+// Routage simple
+$action = $_GET['action'] ?? 'home';
+$page = $_GET['page'] ?? '';
 
-<link rel="stylesheet" href="css/index.css">
-<script src="js/filter.js" defer></script>
-<script src="js/index.js" defer></script>
-
-<main class="Main">
-    <?php require_once(__DIR__ . '/map.php'); ?>
-    <?php require_once(__DIR__ . '/button.php'); ?>
-    <?php require_once(__DIR__ . '/filter.php'); ?>
-</main>
-
-<?php require_once(__DIR__ . '/footer.php'); ?>
+switch ($action) {
+    case 'login':
+        require_once '../app/controllers/login.php';
+        break;
+    case 'signin':
+        require_once '../app/controllers/signin.php';
+        break;
+    case 'logout':
+        require_once '../app/controllers/logout.php';
+        break;
+    case 'dashboard':
+        require_once '../app/controllers/dashboard.php';
+        break;
+    case 'liste':
+        require_once '../app/controllers/list.php';
+        break;
+    case 'card':
+        require_once '../app/controllers/card.php';
+        break;
+    case 'add':
+        require_once '../app/controllers/add.php';
+        break;
+    case 'home':
+    default:
+        require_once '../app/controllers/index.php';
+        break;
+}
