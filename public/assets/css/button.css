@@ -1,0 +1,82 @@
+/* ADD BUTTON */
+.Main-button-add {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #007bff;
+    color: white;
+    font-size: 38px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.2s ease;
+}
+
+/* List BUTTON */
+.Main-button-list {
+    position: fixed;
+    bottom: 90px;
+    right: 25px;
+    width: 40px;
+    height: 40px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Localisation BUTTON*/
+.Main-button-locate {
+    position: fixed;
+    bottom: 150px;
+    right: 27px;
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.Main-button-locate:hover {
+    opacity: .8;
+}
+
+.font-map {
+  font-size: 1.4em;
+  color: #007bff;
+  transition: transform 0.2s ease;
+  /* cursor: pointer; */
+}
+
+.font-map:hover {
+    transform: scale(1.1);
+}
+
+.font-add {
+  transition: transform 0.2s ease;
+}
+
+.font-add:hover {
+    transform: scale(1.2);
+}

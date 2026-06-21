@@ -1,0 +1,161 @@
+/* ======================== */
+/*          LIST            */
+/* ======================== */
+
+/* Google fonts */
+.font-back {
+  font-size: 1.2em;
+}
+
+/* .font-map {
+  font-size: 1.4em;
+  color: #007bff;
+} */
+
+/* top */
+.Main-list-top {
+    display: flex;
+    justify-content: center;
+    padding: 12px 30px;
+    border-bottom: 2px solid #e0e0e0;
+    height: 40px;
+}
+
+.Main-list-top-back {
+    position: absolute;
+    left: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.Main-list-top-back:hover {
+    color: #007bff;
+}
+
+.Main-list-top-title {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.Main-list-top-count {
+    font-size: 0.9em;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* ===== Article ===== */
+.Main-list-article {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Item {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    border-left: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+}
+
+.Item:hover {
+    border: 2px solid  #007bff;
+    border-radius: 10px;
+}
+
+.Item-photo {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin: 15px;
+}
+
+.Item-content {
+    flex: 1;
+    margin: 15px 15px 15px 0px;
+    font-size: .85em;
+    height: 100px;
+}
+
+.Item-content-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Item-content-inside {
+    display: flex;
+    flex-direction: column;
+    height: 65px;
+    justify-content: space-between;
+}
+
+.Item-content-box-ville-span {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.Item-content-date {
+    font-style: italic;
+}
+
+.Item-content-statut {
+    font-style: italic;
+}
+
+.Item-content-statut-span {
+    font-weight: bold;
+    color: orangered;
+    /* color: green; */
+    /* color: red; */
+}
+
+#btn-load-more {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 30px;
+    cursor: pointer;
+}
+
+#loadMoreContainer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* ===================== */
+/*     Couleur Status    */
+/* ===================== */
+
+.status-green {
+    color: green;
+    font-weight: bold;
+}
+
+.status-orange {
+    color: darkorange;
+    font-weight: bold;
+}
+
+.status-red {
+    color: red;
+    font-weight: bold;
+}
+
+.myItem {
+    background-color: #eeeeee;
+}
+
+/* Poppin */
+
+.Success {
+    position: absolute;
+    top: 40px;
+
+    margin:15px;
+    padding:12px;
+    background:#d4edda;
+    color:#155724;
+    border-radius:8px;
+}
