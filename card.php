@@ -43,6 +43,16 @@ function statusClass($status) {
     };
 }
 
+function formatDateFr($dateString) {
+    if (empty($dateString))
+        return '';
+
+    $date = new DateTime($dateString);
+    $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::LONG, IntlDateFormatter::SHORT);
+    $formatter->setPattern("d MMMM yyyy 'à' HH:mm");
+    return $formatter->format($date);
+}
+
 ?>
 
 <script>
@@ -89,7 +99,7 @@ function statusClass($status) {
                     </p>
                     <p class="Main-card-content1-status">Statut : <span class="Main-card-content1-status-span <?= statusClass(htmlspecialchars($poi['status'])) ?>"><?= htmlspecialchars($statusText) ?></span></p>
                 <?php endif; ?>
-                <p class="Main-card-content1-ajoute">Ajouté le <?= (new DateTime($poi['created_at']))->format('d F Y \à H:i') ?></p><br>
+                <p class="Main-card-content1-ajoute">Ajouté le <?= htmlspecialchars(formatDateFr($poi['created_at'])) ?></p><br>
             </div>
             <div class="Main-card-content2">
                 <div class="Main-card-content2-adresse">
@@ -99,17 +109,30 @@ function statusClass($status) {
                     <p class="Main-card-content2-quartier">Quartier : <?= htmlspecialchars($poi['quartier']) ?></p>
                 </div>
 
-                <?php if ($poi['content'] || isModerator()) : ?>
+                <?php if ($poi['content'] || $isOwner || isModerator() || isAdmin()) : ?>
                     <div class="Main-card-content2-coment">
                         <textarea name="content" placeholder="<?= empty(htmlspecialchars($poi['content'] ?? '')) ? 'Ajouter un commentaire (optionnel) ?' : '' ?>" maxlength="500"><?= htmlspecialchars($poi['content'] ?? '') ?></textarea>
                     </div>
                 <?php endif; ?>
 
                 <p class="message"></p>
-                    
+
                 <?php if ($isOwner || isModerator() || isAdmin()) : ?>
                     <div class="Main-card-content2-btn">
-                        <!-- <button class="Main-card-modify Btn">Modifier</button> -->
+                        <?php if (isModerator() || isAdmin()) : ?>
+                            <form action="moderate_poi.php" method="POST">
+                                <input type="hidden" name="poi_id" value="<?= (int)$poi['id'] ?>">
+                                <input type="hidden" name="user_id" value="<?= (int)$poi['user_id'] ?>">
+                                <input type="hidden" name="old_status" value="<?= htmlspecialchars($poi['status']) ?>">
+                                <?php if ($poi['status'] === "PENDING") : ?>
+                                    <button type="submit" name="new_status" value="VALIDATED" class="Main-card-valid Btn">Valider</button>
+                                    <button type="submit" name="new_status" value="REFUSED" class="Main-card-refuse Btn">Refuser</button>
+                                <?php endif; ?>
+                                <?php if ($poi['status'] === "VALIDATED" || $poi['status'] === "REFUSED") : ?>
+                                    <button type="submit" name="new_status" value="PENDING" class="Main-card-pending Btn">Pending</button>
+                                <?php endif; ?>
+                            </form>
+                        <?php endif; ?>
                         <button class="Main-card-btn-del Btn">Supprimer</button>
                     </div>
                 <?php endif; ?>

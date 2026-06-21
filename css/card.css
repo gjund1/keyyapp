@@ -157,8 +157,8 @@
 }
 
 .Btn {
-    padding: 12px 32px;
-    margin-top: 8px;
+    padding: 10px 22px;
+    margin-top: 5px;
 }
 
 select[name="visibility"] {
@@ -307,6 +307,10 @@ textarea[name="content"] {
 .Btn-danger {
     background:#d32f2f;
     color:white;
+}
+
+.Main-card-valid {
+    margin-right: 10px;
 }
 
 /* =================================== */

@@ -19,7 +19,7 @@ let accuracyCircle = null;
 let accuracy = 999;
 
 function gpsAccuracy() {
-    if (accuracy < 110000) {                                            // 11
+    if (accuracy < 118000) {                                            // 11
         btnCapture.disabled = false;
         btnCapture.textContent = "Capturer";
         gpsInfo.textContent = `GPS ✅ ${Math.round(accuracy)} m`;
@@ -119,7 +119,7 @@ btnCapture.addEventListener("click", async () => {
     }, "image/jpeg", 0.9);
 });
 
-// COMPRESSION IMAGE (<2 Mo)
+// COMPRESSION IMAGE
 
 async function compressImage(blob) {
     return new Promise(resolve => {

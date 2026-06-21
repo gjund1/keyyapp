@@ -52,6 +52,7 @@ foreach ($pois as $poi) {
         "status" => $poi["status"],
         "created_at" => date('c', strtotime($poi["created_at"])),
         "content" => $poi["content"],
+        "points" => (int)$poi["points"],
         "user_id" => (int)$poi["user_id"]
     ];
 }

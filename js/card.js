@@ -110,7 +110,7 @@ function showTemporaryMessage(text, duration = 3000) {
 }
 
 // =============================
-//  MODIF Visibility et comment
+//   MODIF Visibility
 // =============================
 
 const visibilityBox = document.getElementById("visibilityBox");
@@ -138,8 +138,15 @@ if (contentTextarea) {
         const value = contentTextarea.value;
         const res = await fetch("update_poi.php", {method: "POST", body: new URLSearchParams({poi_id: poiId, field: "content", value})});
         const data = await res.json();
-    
-        if (data.success)
+
+        if (data.success) {
             showTemporaryMessage("Les modifications ont bien été prises en compte !");
+            const statusEl = document.querySelector('.Main-card-content1-status-span');
+
+            if (statusEl) {
+                statusEl.textContent = "en attente";
+                statusEl.className = "Main-card-content1-status-span status-orange";
+            }
+        }
     });
 }

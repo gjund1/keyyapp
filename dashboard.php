@@ -61,6 +61,7 @@ function roleBadgeName($role) {
             </div>
 
              <div class="Main-dash-card-role <?= roleBadgeClass(getRole()) ?>"><?= roleBadgeName(getRole()) ?>&nbsp;<?= $_SESSION["id"] ?></div>
+             <div class="Main-dash-card-points"><?= (int)$_SESSION["points"] ?> point<?= ((int)$_SESSION["points"] > 1) ? 's' : '' ?></div>
             <div class="Main-dash-card-date">inscrit le <?= dateFr() ?></div>
             <div class="Main-dash-card-id">ID: <?= $_SESSION["id"] ?></div>
         </div>
@@ -94,6 +95,7 @@ function roleBadgeName($role) {
         </div>
         <?php endif; ?>
     
+        <?php if (isAdmin()): ?>
         <div class="Main-dash-liste">
             <div class="Main-list-dash">
                 <h3 class="Main-dash-liste-title">Boites à clés deja Modéré</h3>
@@ -103,6 +105,7 @@ function roleBadgeName($role) {
                 </div>
             </div>
         </div>
+         <?php endif; ?>
 
         <a class="Main-dash-deconnection btn-logout" href="logout.php">Déconnexion</a>
     </div>
