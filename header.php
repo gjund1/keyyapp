@@ -34,9 +34,9 @@ function roleUserClass($role) {
         <div class="Header-laptop">
             <a href="dashboard.php" class="Header-laptop-item">Mon profil</a>
             <a href="liste.php" class="Header-laptop-item">Ma liste</a>
-            <a href="faq.php" class="Header-laptop-item">FAQ</a>
-            <!-- <a href="mentions.php" class="Menu-item">Mentions légales</a> -->
-            <a href="contact.php" class="Header-laptop-item">Contact</a>
+            <!-- <a href="faq.php" class="Header-laptop-item">FAQ</a> -->
+            <a href="mentions.php" class="Header-laptop-item">Mentions légales</a>
+            <a href="mailto:info@keyyapp.com" class="Header-laptop-item">Contact</a>
         </div>
         <div class="Header-avatar Card-logo <?= roleUserClass(getRole()) ?>">
             <a class="Card-logo-a" href="login.php"><?= strtoupper($_SESSION["name"][0] ?? 'U') ?></a>
@@ -53,9 +53,9 @@ function roleUserClass($role) {
         <div class="Menu-content">
             <a href="dashboard.php" class="Menu-item">👤 Mon profil</a>
             <a href="liste.php" class="Menu-item">📋 Ma liste</a>
-            <a href="faq.php" class="Menu-item">❓ FAQ</a>
+            <!-- <a href="faq.php" class="Menu-item">❓ FAQ</a> -->
             <a href="mentions.php" class="Menu-item">📄 Mentions légales</a>
-            <a href="contact.php" class="Menu-item">✉️ Contact</a>
+            <a href="mailto:info@keyyapp.com" class="Menu-item">✉️ Contact</a>
             <div class="Menu-separator"></div>
             <a href="logout.php" class="Menu-logout">❌ Déconnexion</a>
         </div>

@@ -19,19 +19,27 @@ let accuracyCircle = null;
 let accuracy = 999;
 
 function gpsAccuracy() {
-    if (accuracy < 118000) {                                            // 11
+    if (accuracy < 118000) {                                            // 11  118000
         btnCapture.disabled = false;
         btnCapture.textContent = "Capturer";
         gpsInfo.textContent = `GPS ✅ ${Math.round(accuracy)} m`;
+
+        mapBox.classList.remove("Add-map-box-orange", "Add-map-box-red");
         mapBox.classList.add("Add-map-box-green");
-        btnCapture.style.cursor = 'pointer';
+        btnCapture.style.cursor = "pointer";
 
     } else if (accuracy < 21) {
         gpsInfo.textContent = `GPS ⚠️ ${Math.round(accuracy)} m`;
+
+        mapBox.classList.remove("Add-map-box-green", "Add-map-box-red");
         mapBox.classList.add("Add-map-box-orange");
+        btnCapture.style.cursor = "not-allowed";
     } else {
         gpsInfo.textContent = `GPS ❌ ${Math.round(accuracy)} m`;
+
+        mapBox.classList.remove("Add-map-box-green", "Add-map-box-orange");
         mapBox.classList.add("Add-map-box-red");
+        btnCapture.style.cursor = "not-allowed";
     }
 }
 
@@ -70,10 +78,12 @@ navigator.geolocation.watchPosition(
 // CAMERA LIVE (ARrière)
 // ======================
 
-navigator.mediaDevices.getUserMedia({
+navigator.mediaDevices.getUserMedia({    
     video: {
-        // facingMode: "environment"
-        facingMode: "user"
+        facingMode: {
+            ideal: "environment"
+            // facingMode: "user"
+        }
     }
 })
 .then(stream => {
@@ -88,6 +98,7 @@ navigator.mediaDevices.getUserMedia({
 
 btnCapture.addEventListener("click", async () => {
 
+    btnCapture.classList.add("is-clicked");
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext("2d");
