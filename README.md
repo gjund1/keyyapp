@@ -161,9 +161,13 @@ Tables principales :
 
    * Ouvrir **phpMyAdmin**.
    * Sélectionner la base.
-   * Importer le fichier `keyyapp.sql`.
+   * Importer le fichier `db/keyyapp.sql`.
 
-3. **Configurer l'application**
+3. **Déployer les fichiers**
+
+   * Transférer les fichiers du projet sur le serveur **PHP 8.3+**.
+
+4. **Configurer l'application**
 
    * Modifier `config.php` avec les informations de connexion :
 
@@ -173,10 +177,6 @@ Tables principales :
     $user = "votre_nom_user";
     $pass = "votre_password";
    ```
-
-4. **Déployer les fichiers**
-
-   * Transférer les fichiers du projet sur le serveur.
 
 5. **Tester**
 
