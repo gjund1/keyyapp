@@ -149,12 +149,40 @@ Tables principales :
 
 ---
 
-## 📦 Déploiement
+## 🚀 Déploiement
 
-- Apache
-- PHP 8
-- MySQL
-- Gestion upload images
+1. **Créer la base de données**
+
+   * Créer une base MySQL sur le serveur.
+   * Créer un utilisateur avec un mot de passe.
+   * Attribuer l'utilisateur à la base avec les privilèges nécessaires (INSERT, SELECT, UPDATE, DELETE).
+
+2. **Importer la base**
+
+   * Ouvrir **phpMyAdmin**.
+   * Sélectionner la base.
+   * Importer le fichier `keyyapp.sql`.
+
+3. **Configurer l'application**
+
+   * Modifier `config.php` avec les informations de connexion :
+
+   ```php
+    $host = "localhost";
+    $dbname = "votre_nom_de_base";
+    $user = "votre_nom_user";
+    $pass = "votre_password";
+   ```
+
+4. **Déployer les fichiers**
+
+   * Transférer les fichiers du projet sur le serveur.
+
+5. **Tester**
+
+   * Vérifier la connexion à la base.
+   * Tester l'affichage de la carte, l'ajout d'un POI et l'upload d'une photo.
+
 
 ---
 
