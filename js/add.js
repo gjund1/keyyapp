@@ -19,8 +19,8 @@ let accuracyCircle = null;
 let accuracy = 999;
 
 function gpsAccuracy() {
-    if (accuracy < 118000) {                                            // 11  118000
-        btnCapture.disabled = false;
+    if (accuracy < 11) {                                            // 11  118000
+        btnCapture.disabled = false; 
         btnCapture.textContent = "Capturer";
         gpsInfo.textContent = `GPS ✅ ${Math.round(accuracy)} m`;
 
