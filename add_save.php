@@ -1,4 +1,5 @@
-<?php require_once(__DIR__ . '/config.php');
+<?php 
+require_once(__DIR__ . '/config.php');
 requireLogin();
 
 if (!isset($_SESSION['new_poi'])) {
@@ -27,6 +28,26 @@ if (file_exists($tmpFile))
 $stmt = $pdo->prepare("INSERT INTO photos (poi_id, file_path) VALUES (?, ?)");
 $stmt->execute([$poiId, $finalRelativePath]);
 
+// Envoi d'un email en attente de modération
+// avec lien de la card
+if($ok_mail) {
+    $subject = "KeyyApp - Nouveau POI à modérer";
+    $body = "
+        <h2>Nouveau point d'intérêt à modérer</h2>
+        <p>Un nouveau POI attend ta validation.</p>
+        <p><strong>Numéro :</strong> {$poiId}</p>
+        <p><strong>Ville :</strong> " . htmlspecialchars($temp['city'] ?? '', ENT_QUOTES, 'UTF-8') . "</p>
+        <p><strong>Adresse :</strong> " . htmlspecialchars($temp['address'] ?? '', ENT_QUOTES, 'UTF-8') . "</p>
+        <p><strong>Visibilité :</strong> " . htmlspecialchars($visibility, ENT_QUOTES, 'UTF-8') . "</p>,
+        <p><a href='http://keyyapp.com/card.php?id={$poiId}'>Voir le POI</a></p>
+    ";
+    
+    if (!sendMail($to_mail, $subject, $body)) {
+        error_log("Échec de l'envoi de l'email pour le POI #" . $poiId);
+    }
+}
+
+// Nettoyage de la session et redirection
 unset($_SESSION['new_poi']);
 // header("Location: card.php?id=" . $poiId);
 $_SESSION['success'] = "enregistré avec succès !";

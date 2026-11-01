@@ -1,5 +1,10 @@
 <?php
 session_start();
+require_once(__DIR__ . '/mail.php');
+
+// parametres
+$ok_mail = true;
+$to_mail = 'info@keyyapp.com'; // Adresse email de destination pour les notifications
 
 $host = "localhost";
 $dbname = "keymap";
