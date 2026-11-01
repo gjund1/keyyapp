@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="email" name="email" class="Main-form-login InputLogin" required placeholder="Adresse email"><br>
                 <div class="pwd-wrapper">
                     <input type="password" id="pwd" name="pwd" class="Main-form-pwd InputLogin" required placeholder="Mot de passe"><br>
+                    <a class="Main-form-pwd-oublie" href="forgot-password.php">Mot de passe oublié ?</a>
                     <p class="Main-form-pwd-oublie">Mot de passe oublié</p>
                     <span class="togglePwd pwd-oeil" data-target="pwd"><i class="fa-solid fa-eye"></i></span>
                 </div>
