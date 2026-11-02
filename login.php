@@ -9,8 +9,8 @@ if (isLogged()) {
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST["email"]);
-    $pwd = $_POST["pwd"];
+    $email = trim($_POST["email"] ?? '');
+    $pwd = $_POST["pwd"] ?? '';
 
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $pdo->prepare($sql);
@@ -18,23 +18,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch();
 
     if ($user && password_verify($pwd, $user["pwd_hash"])) {
-        session_regenerate_id(true);
+        if (!$user['email_verified'])
+            $message = "Veuillez vérifier votre adresse email avant de vous connecter.";
+        else {
+            session_regenerate_id(true);
+            $_SESSION["id"] = $user["id"];
+            $_SESSION["name"] = $user["name"];
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["role"] = $user["role"];
+            $_SESSION["points"] = $user["points"];
+            $_SESSION["created_at"] = $user["created_at"];
 
-        $_SESSION["id"] = $user["id"];
-        $_SESSION["name"] = $user["name"];
-        $_SESSION["email"] = $user["email"];
-        $_SESSION["role"] = $user["role"];
-        $_SESSION["points"] = $user["points"];
-        $_SESSION["created_at"] = $user["created_at"];
+            $stmt = $pdo->prepare("UPDATE users SET last_seen_at = NOW() WHERE id = ?");
+            $stmt->execute([$user["id"]]);
 
-        header("Location: dashboard.php");
-        exit();
-
+            header("Location: dashboard.php");
+            exit();
+        }
     } else
         $message = "Email ou mot de passe incorrect";
-
-    $stmt = $pdo->prepare("UPDATE users SET last_seen_at = NOW() WHERE id = ?");
-    $stmt->execute([$user["id"]]);
 }
 
 ?>

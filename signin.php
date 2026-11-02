@@ -9,31 +9,77 @@ if (isLogged()) {
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['pwd']))
-         $message = "Tous les champs sont obligatoires.";
-    else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-            $message = "L'adresse email n'est pas valide.";
-    else if (strlen($_POST['pwd']) < 8)
+        $message = "Tous les champs sont obligatoires.";
+    elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+        $message = "L'adresse email n'est pas valide.";
+    elseif (strlen($_POST['pwd']) < 8)
         $message = "Le mot de passe doit contenir au moins 8 caractères.";
+    elseif ($_POST['pwd'] !== ($_POST['pwd2'] ?? ''))
+        $message = "Les mots de passe ne correspondent pas.";
     else {
         $name = trim($_POST["name"]);
         $email = trim($_POST["email"]);
         $pwd = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-    
-        $sql = "INSERT INTO users (name, email, pwd_hash) VALUES (?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-    
+
         try {
+            // Création du compte non vérifié
+            $sql = "INSERT INTO users (name, email, pwd_hash, email_verified) VALUES (?, ?, ?, 0)";
+            $stmt = $pdo->prepare($sql);
             $stmt->execute([$name, $email, $pwd]);
-            header("Location: login.php?register=success");
-            exit();
-    
-        } catch(PDOException $e) {
-            $message = "Email déjà utilisé !";
-            // $message = $e->getMessage();
+            $userId = $pdo->lastInsertId();
+
+            // Génération du jeton de vérification
+            $token = bin2hex(random_bytes(32));
+            $tokenHash = hash('sha256', $token);
+
+            // Expiration dans 24 heures (calculée par MySQL)
+            $stmt = $pdo->prepare("INSERT INTO account_tokens (user_id, token_hash, expires_at, token_type) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 24 HOUR), 'EMAIL_VERIFY')");
+            $stmt->execute([$userId, $tokenHash]);
+
+            // Création du lien
+            $link = 'https://www.keyyapp.com/verify_email.php?token=' . urlencode($token);
+
+            // Email
+            $subject = "KeyyApp - Vérification de votre adresse email";
+
+            $body = "
+                <h2>Bienvenue sur KeyyApp !</h2>
+                <p>Bonjour " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . ",</p>
+                <p>Merci pour votre inscription.</p>
+                <p>Pour activer votre compte, veuillez confirmer votre adresse email :</p>
+                <p>
+                    <a href=\"" . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . "\">
+                        Vérifier mon adresse email
+                    </a>
+                </p>
+                <p>Ce lien est valable pendant 24 heures.</p>
+                <p>Si vous n'êtes pas à l'origine de cette inscription, ignorez cet email.</p>
+            ";
+
+            if (sendMail($email, $subject, $body)) {
+                $message = "Inscription réussie ! Consultez votre boîte mail pour vérifier votre adresse email.";
+            } else {
+                error_log("Échec de l'envoi du mail de vérification pour user #" . $userId);
+                $message = "Votre compte a été créé, mais l'email de vérification n'a pas pu être envoyé. Contactez l'administrateur.";
+            }
+
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $message = "Cette adresse email est déjà utilisée.";
+            } else {
+                error_log("Erreur inscription : " . $e->getMessage());
+                $message = "Une erreur est survenue lors de l'inscription.";
+            }
         }
     }
 }
+?>
+
+
+// ==================================================
+
 
 ?>
 
@@ -48,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="Main">
         <img class="Main-title-img" src="img/favicon.png" alt="KeyyApp">
         <p class="Main-title">Créer un compte</p>
-        <p><?= $message ?></p>
+        <p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p>
     
         <div class="Main-form">
             <form method="post">

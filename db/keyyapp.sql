@@ -176,7 +176,7 @@ ALTER TABLE `poi_reports`
   ADD CONSTRAINT `poi_reports_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
-CREATE TABLE password_resets (
+CREATE TABLE account_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     token_hash CHAR(64) NOT NULL,
@@ -185,7 +185,14 @@ CREATE TABLE password_resets (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY token_hash (token_hash),
     KEY user_id (user_id),
-    CONSTRAINT fk_password_resets_user
+    CONSTRAINT fk_account_tokens_user
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE users
+ADD COLUMN email_verified TINYINT(1) NOT NULL DEFAULT 1;
+
+ALTER TABLE account_tokens
+ADD COLUMN token_type ENUM('PASSWORD_RESET', 'EMAIL_VERIFY')
+NOT NULL DEFAULT 'PASSWORD_RESET';

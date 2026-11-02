@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $expiresAt = date('Y-m-d H:i:s', time() + 2*3600);
 
             $stmt = $pdo->prepare(
-                "INSERT INTO password_resets (user_id, token_hash, expires_at)
+                "INSERT INTO account_tokens (user_id, token_hash, expires_at)
                  VALUES (?, ?, ?)"
             );
             $stmt->execute([$user['id'], $tokenHash, $expiresAt]);

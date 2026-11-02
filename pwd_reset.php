@@ -8,14 +8,7 @@ $tokenHash = '';
 if ($token !== '') {
     $tokenHash = hash('sha256', $token);
 
-    $stmt = $pdo->prepare("
-        SELECT id, user_id
-        FROM password_resets
-        WHERE token_hash = ?
-          AND expires_at > NOW()
-          AND used_at IS NULL
-        LIMIT 1
-    ");
+    $stmt = $pdo->prepare(" SELECT id, user_id FROM account_tokens WHERE token_hash = ? AND token_type = 'PASSWORD_RESET' AND expires_at > NOW() AND used_at IS NULL LIMIT 1");
     $stmt->execute([$tokenHash]);
     $reset = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
@@ -46,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$newHash, $reset['user_id']]);
 
             $stmt = $pdo->prepare("
-                UPDATE password_resets
+                UPDATE account_tokens
                 SET used_at = NOW()
                 WHERE id = ?
             ");
@@ -54,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Invalide aussi les autres liens encore actifs pour ce compte
             $stmt = $pdo->prepare("
-                UPDATE password_resets
+                UPDATE account_tokens
                 SET used_at = NOW()
                 WHERE user_id = ?
                   AND used_at IS NULL
