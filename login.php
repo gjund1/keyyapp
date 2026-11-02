@@ -49,9 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <main class="Main-map">
     <div class="Main">
         <div class="Main-title">
+
             <?php if (isset($_GET['register']) && $_GET['register'] === 'success'): ?>
                 <div class="toast-success">Compte créé avec succès !</div>
             <?php endif; ?>
+            <?php if (isset($_GET['password_reset']) && $_GET['password_reset'] === 'success'): ?>
+                <div class="toast-success">Mot de passe modifié avec succès. Connectez-vous.</div>
+            <?php endif; ?>
+            
             <img class="Main-title-img" src="img/favicon.png" alt="KeyyApp">
             <p>Connectez-vous à votre compte</p>
         </div>
@@ -62,8 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="email" name="email" class="Main-form-login InputLogin" required placeholder="Adresse email"><br>
                 <div class="pwd-wrapper">
                     <input type="password" id="pwd" name="pwd" class="Main-form-pwd InputLogin" required placeholder="Mot de passe"><br>
-                    <a class="Main-form-pwd-oublie" href="forgot-password.php">Mot de passe oublié ?</a>
-                    <p class="Main-form-pwd-oublie">Mot de passe oublié</p>
+                    <p class="Main-form-pwd-oublie"><a href="pwd_forgot.php">Mot de passe oublié ?</a></p>
                     <span class="togglePwd pwd-oeil" data-target="pwd"><i class="fa-solid fa-eye"></i></span>
                 </div>
                 <button class="Main-form-btn Btn" type="submit">Se connecter</button>

@@ -23,7 +23,7 @@ function roleUserClass($role) {
     <script src="js/header.js" defer></script>
     <!-- <script src="js/data.js"></script> -->
 
-    <title>KeyMap</title>
+    <title>KeyyApp - Application recensement et de localisation des "boîtes à clés" dans l’espace public</title>
 </head>
 
 <body>
