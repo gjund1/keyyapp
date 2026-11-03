@@ -1,7 +1,23 @@
-<?php 
+<?php
 require_once(__DIR__ . '/config.php');
 requireLogin();
+
+// Vérifier que les données de capture existent
+if (!isset($_SESSION['new_poi'])) {
+    header('Location: add.php');
+    exit;
+}
+
 $poi = $_SESSION['new_poi'];
+
+// Recherche des POI dans un rayon de 8 mètres
+$sql = "SELECT id, latitude, longitude, address, city, quartier, status, content,
+        (6371000 * 2 * ASIN(SQRT(POWER(SIN(RADIANS(latitude - :lat1) / 2), 2) + COS(RADIANS(:lat2)) * COS(RADIANS(latitude)) * POWER(SIN(RADIANS(longitude - :lon) / 2), 2)))) AS distance
+        FROM pois WHERE status IN ('PENDING', 'VALIDATED') HAVING distance <= 8 ORDER BY distance ASC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['lat1' => $poi['lat'], 'lat2' => $poi['lat'], 'lon'  => $poi['lon']]);
+
+$nearbyPois = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php require_once(__DIR__ . '/header.php'); ?>
@@ -31,8 +47,7 @@ $poi = $_SESSION['new_poi'];
             <p class="Main-card-top-count"></p>
         </div>
         <div class="Main-card-box">
-            <div id="map" class="Main-card-map">
-                
+            <div id="map" class="Main-card-map">  
             </div>
             <img id="poiImage" class="Main-card-photo" src="<?= htmlspecialchars($poi['photo'], ENT_QUOTES, 'UTF-8') ?>" alt="boites">
             <div class="Main-card-content1">
@@ -58,12 +73,47 @@ $poi = $_SESSION['new_poi'];
                 <div class="Main-card-content2-coment">
                     <textarea name="content" placeholder="Ajouter un commentaire (optionnel) ?" maxlength="500" form="saveForm"></textarea>
                 </div>
-                <div class="Main-card-content2-btn">
-                    <form id="saveForm" action="add_save.php" method="POST">
-                        <button type="submit" class="Btn">Enregistrer</button>
-                    </form>
-                </div>
+                <?php if (empty($nearbyPois)): ?>
+                    <div class="Main-card-content2-btn">
+                        <form id="saveForm" action="add_save.php" method="POST">
+                            <button type="submit" class="Btn">Enregistrer</button>
+                        </form>
+                    </div>
+                <?php endif; ?>
             </div>
+
+            <!-- Avertissement des POI proches -->
+            <?php if (!empty($nearbyPois)): ?>
+                <div class="Nearby-warning">
+                    <h3>⚠️ Des boîtes existent à proximité</h3>
+                    <p>Nous avons trouvé <?= count($nearbyPois) ?> boîte<?= count($nearbyPois) > 1 ? 's' : '' ?> dans un rayon de 8 mètres :</p>
+
+                    <?php foreach ($nearbyPois as $nearby): ?>
+                        <div class="Nearby-item">
+                            <p><a href="card.php?id=<?= (int)$nearby['id'] ?>" target="_blank" rel="noopener"><strong>voir la boîte <?= (int)$nearby['id'] ?></strong></a></p>
+                            
+                            <form id="replaceForm<?= (int)$nearby['id'] ?>" action="add_update.php" method="POST">
+                                <input type="hidden" name="old_poi_id" value="<?= (int)$nearby['id'] ?>">
+                                <input type="hidden" name="content" value="">
+                                <input type="hidden" name="visibility" value="PUBLIC">
+                                <button type="submit" class="Btn" onclick="const form = this.form;
+                                    form.elements['content'].value = document.querySelector('#saveForm textarea[name=content]').value;
+                                    form.elements['visibility'].value = document.querySelector('#visibility').value;">Remplacer cette boîte
+                                </button>
+                            </form>
+                            
+                            <form action="add_update.php" method="POST">
+                                <input type="hidden" name="old_poi_id" value="<?= (int)$nearby['id'] ?>">
+                                <button type="submit" class="Btn">Remplacer cette boîte</button>
+                            </form>
+                        </div>
+
+                    <?php endforeach; ?>
+                    <button type="button" class="Btn" onclick="document.getElementById('saveForm').requestSubmit()">Ajouter quand même une nouvelle boîte</button>
+                    <br><br>
+                </div>
+            <?php endif; ?>
+
         </div>
     </div>
     <div id="lightbox" class="Lightbox">
