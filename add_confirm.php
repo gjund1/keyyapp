@@ -11,7 +11,7 @@ if (!isset($_SESSION['new_poi'])) {
 $poi = $_SESSION['new_poi'];
 
 // Recherche des POI dans un rayon de 8 mètres
-$sql = "SELECT id, latitude, longitude, address, city, quartier, status, content,
+$sql = "SELECT id, user_id, latitude, longitude, address, city, quartier, status, content,
         (6371000 * 2 * ASIN(SQRT(POWER(SIN(RADIANS(latitude - :lat1) / 2), 2) + COS(RADIANS(:lat2)) * COS(RADIANS(latitude)) * POWER(SIN(RADIANS(longitude - :lon) / 2), 2)))) AS distance
         FROM pois WHERE status IN ('PENDING', 'VALIDATED') HAVING distance <= 8 ORDER BY distance ASC";
 $stmt = $pdo->prepare($sql);
@@ -47,7 +47,8 @@ $nearbyPois = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p class="Main-card-top-count"></p>
         </div>
         <div class="Main-card-box">
-            <div id="map" class="Main-card-map">  
+
+            <div id="map" class="Main-card-map">
             </div>
             <img id="poiImage" class="Main-card-photo" src="<?= htmlspecialchars($poi['photo'], ENT_QUOTES, 'UTF-8') ?>" alt="boites">
             <div class="Main-card-content1">
@@ -67,21 +68,20 @@ $nearbyPois = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </select>
                 </p>
             </div>
+            
             <div class="Main-card-content2">
-                <!-- <div class="Main-card-content2-adresse">
-                </div> -->
                 <div class="Main-card-content2-coment">
-                    <textarea name="content" placeholder="Ajouter un commentaire (optionnel) ?" maxlength="500" form="saveForm"></textarea>
+                    <textarea id="content" name="content" placeholder="Ajouter un commentaire (optionnel) ?" maxlength="500" form="saveForm"></textarea>
                 </div>
-                <?php if (empty($nearbyPois)): ?>
-                    <div class="Main-card-content2-btn">
-                        <form id="saveForm" action="add_save.php" method="POST">
+                <div class="Main-card-content2-btn">
+                    <form id="saveForm" action="add_save.php" method="POST">
+                        <?php if (empty($nearbyPois)): ?>
                             <button type="submit" class="Btn">Enregistrer</button>
-                        </form>
-                    </div>
-                <?php endif; ?>
+                        <?php endif; ?>
+                    </form>
+                </div>
             </div>
-
+                            
             <!-- Avertissement des POI proches -->
             <?php if (!empty($nearbyPois)): ?>
                 <div class="Nearby-warning">
@@ -89,31 +89,31 @@ $nearbyPois = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p>Nous avons trouvé <?= count($nearbyPois) ?> boîte<?= count($nearbyPois) > 1 ? 's' : '' ?> dans un rayon de 8 mètres :</p>
 
                     <?php foreach ($nearbyPois as $nearby): ?>
+                        <?php
+                            $isOwner = ((int)$nearby['user_id'] === (int)$_SESSION['id']);
+                            $canReplace = $isOwner || isAdmin() || isModerator();
+                        ?>
                         <div class="Nearby-item">
-                            <p><a href="card.php?id=<?= (int)$nearby['id'] ?>" target="_blank" rel="noopener"><strong>voir la boîte <?= (int)$nearby['id'] ?></strong></a></p>
-                            
-                            <form id="replaceForm<?= (int)$nearby['id'] ?>" action="add_update.php" method="POST">
-                                <input type="hidden" name="old_poi_id" value="<?= (int)$nearby['id'] ?>">
-                                <input type="hidden" name="content" value="">
-                                <input type="hidden" name="visibility" value="PUBLIC">
-                                <button type="submit" class="Btn" onclick="const form = this.form;
-                                    form.elements['content'].value = document.querySelector('#saveForm textarea[name=content]').value;
-                                    form.elements['visibility'].value = document.querySelector('#visibility').value;">Remplacer cette boîte
-                                </button>
-                            </form>
-                            
-                            <form action="add_update.php" method="POST">
-                                <input type="hidden" name="old_poi_id" value="<?= (int)$nearby['id'] ?>">
-                                <button type="submit" class="Btn">Remplacer cette boîte</button>
-                            </form>
+                            <p><a href="card.php?id=<?= (int)$nearby['id'] ?>" target="_blank" rel="noopener"><strong>Voir la boîte <?= (int)$nearby['id'] ?></strong></a></p>
+                            <?php if ($canReplace): ?>
+                                <form action="add_update.php" method="POST">
+                                    <input type="hidden" name="old_poi_id" value="<?= (int)$nearby['id'] ?>">
+                                    <input type="hidden" name="content" value="">
+                                    <input type="hidden" name="visibility" value="PUBLIC">
+                                    <button type="submit" class="Btn" onclick="
+                                        this.form.elements['content'].value = document.getElementById('content').value;
+                                        this.form.elements['visibility'].value = document.getElementById('visibility').value;">Remplacer cette boîte
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </div>
-
                     <?php endforeach; ?>
+                    
                     <button type="button" class="Btn" onclick="document.getElementById('saveForm').requestSubmit()">Ajouter quand même une nouvelle boîte</button>
                     <br><br>
                 </div>
             <?php endif; ?>
-
+            
         </div>
     </div>
     <div id="lightbox" class="Lightbox">
